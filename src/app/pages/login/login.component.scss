@@ -1,0 +1,53 @@
+.img-bg{
+   background-size: cover;
+   height: 100%;
+   width: 100%;
+   position: fixed;
+}
+
+.login {
+   overflow: hidden; /* Hide scrollbars */
+ }
+
+.img-logo{
+   padding-left: 5%;
+   padding-right: 5%;
+   width: 100%;
+}
+
+
+.card{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   .card-body{
+      padding: 7rem !important;
+   }
+}
+
+.row{
+   margin-top: 2.5rem;
+}
+
+
+
+
+
+button{
+   background-color: #E5242F;
+   color:white;
+}
+
+button:hover{
+   background-color: #E5242F;
+
+}
+
+input{
+   border-bottom: 1px solid black;
+}
+
+.btn-block:hover{
+   cursor: pointer;
+}
+  

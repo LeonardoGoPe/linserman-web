@@ -1,0 +1,51 @@
+<form>
+
+   <div class="row d-flex justify-content-center mt-4">
+         <label class="row d-flex justify-content-center contrato col-12" for="firstname">Crear contrato</label>
+   </div>
+
+
+   <div class="row d-flex justify-content-center">
+         <label class="row col-5" for="firstname">Nombre del contrato</label>
+         <input class="row col-5" type="text" id="firstname" name="firstname">
+   </div>
+
+   <div class="row d-flex justify-content-center">
+      <label class="row col-5" for="firstname">Ubicación</label>
+      <select class="row col-5" name="Ubicacion" id="Ubicacion">
+         <option selected="" value=""></option>
+         <option [ngValue]="c.id" *ngFor="let c of UbicacionList">
+            {{c.name}}
+         </option>
+      </select>
+   </div>
+
+   <div class="row d-flex justify-content-center">
+         <label class="row col-5" for="firstname">Supervisor asignado</label>
+         <input class="row col-5" type="text" id="firstname" name="firstname">
+   </div>
+
+   <div class="row d-flex justify-content-center">
+      <label class="row col-5" for="firstname">Actividades</label>
+      <select class="row col-5" name="Ubicacion" id="Ubicacion">
+         <option selected="" value=""></option>
+         <option [ngValue]="c.id" *ngFor="let c of ActividadesList">
+            {{c.name}}
+         </option>
+      </select>
+   </div>
+
+   <div class="row d-flex justify-content-center">
+         <label class="row addActividad col-5" for="firstname">+Añadir actividad</label>
+   </div>
+
+
+   <div class="row col-12 d-flex justify-content-center">
+      <div class="form-group row col-12 d-flex justify-content-center col-12 col-sm-4 col-md-3 col-lg-4 col-xl-6 buttons search">
+         <button type="submit" class="btn btn-info" id="buscar">
+            Generar contrato
+         </button>
+      </div>
+   </div>
+ 
+</form>

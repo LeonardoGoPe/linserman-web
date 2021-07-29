@@ -1,0 +1,59 @@
+<app-navegacion></app-navegacion>
+<div class="container-fluid px-5 py-5">
+   <div class="row justify-content-center clientes">
+        <!-- <app-loading *ngIf="processing"></app-loading> -->
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-12">
+            <div class="search-container">
+                <div class="row">
+                    <form id="formaSearchClientes" class="formSearch"> 
+                        <div class="row">
+                            <div class="form-group col-6 col-sm-2 col-md-2 col-lg-2 col-xl-2 my-input">
+                            </div>
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-3 col-xl-3 my-input my-select-2">
+                                <label for="">Identificación</label>
+                                    <input name="identificacionSearch">
+                            </div>
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input my-select-2">
+                                <label for="">Nombre</label>
+                                <input name="clienteSearch">
+                            </div>                           
+
+                            <div class="form-group col-12 col-sm-4 col-md-3 col-lg-4 col-xl-3 buttons search">
+                                <button type="submit" class="btn success-button btn-searchs" id="buscar"
+                                    >Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tableContent">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="nameCliente" scope="col">Nombre</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Rol Persona</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let cliente of [1,2,3,4,5,6,7]">
+                        <td>Personal {{cliente}}</td>
+                        <td>Identificación de la persona {{cliente}}</td>
+                        <td>
+                           <span *ngIf="cliente==1|| cliente==3|| cliente==5 || cliente==7" >Supervisor</span>
+                           <span *ngIf="cliente==2|| cliente==4|| cliente==6" >Administrador</span>
+                        </td>
+                        <td class="accions">
+                           <img alt="search" src="assets/editar.svg">
+                           <img alt="search" src="assets/eliminar.svg">
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>

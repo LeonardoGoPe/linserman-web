@@ -1,0 +1,97 @@
+<!-- Navbar -->
+<nav class="navbar sticky-top navbar-custom navbar-expand-lg navbar-light">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-lg-0" (click)="enrutamiento('generacion-reportes')">
+        <img
+          src="./assets/linserman-logo.jpg"
+          height="40"
+          alt=""
+          loading="lazy"
+        />
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/generacion-reportes" routerLinkActive="active">Generación de reportes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reportes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contratos" routerLinkActive="active" >Contratos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/actividades" routerLinkActive="active">Actividades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/personal" routerLinkActive="active">Personal</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/informacion" routerLinkActive="active">Información</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+      <!-- Avatar -->
+      <a
+        class="dropdown-toggle d-flex align-items-center hidden-arrow"
+        (click)="enrutamiento('generacion-reportes')"
+        id="navbarDropdownMenuLink"
+        role="button"
+        data-mdb-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          src="https://mdbootstrap.com/img/new/avatars/2.jpg"
+          class="rounded-circle"
+          height="25"
+          alt=""
+          loading="lazy"
+        />
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="navbarDropdownMenuLink"
+      >
+        <li>
+          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">My profile</a>
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">Settings</a>
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">Logout</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Right elements -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+
+<router-outlet></router-outlet>

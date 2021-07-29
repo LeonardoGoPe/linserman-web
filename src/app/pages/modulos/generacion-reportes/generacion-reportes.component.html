@@ -1,0 +1,45 @@
+<app-navegacion></app-navegacion>
+<app-cargando *ngIf="cargando"></app-cargando>
+<div class="container-fluid px-5 py-5">
+   <div class="row justify-content-center clientes">
+        <!-- <app-loading *ngIf="processing"></app-loading> -->
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-12">
+            <div class="search-container">
+                <div class="row">
+                    <form id="formaSearchClientes" class="formSearch"> 
+                        <div class="row">
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-3 col-xl-3 my-input">
+                                <label for="">Autor</label>
+                                    <input name="identificacionSearch">
+                            </div>
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input">
+                                <label for="">Contrato</label>
+                                <input name="clienteSearch">
+                            </div> 
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input">
+                                <label for="">Actividad</label>
+                                <input name="clienteSearch">
+                            </div>                          
+
+                            <div class="form-group col-12 col-sm-4 col-md-3 col-lg-4 col-xl-2 buttons search">
+                                <button type="submit" class="btn success-button btn-searchs" id="buscar"
+                                    >Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row d-flex pt-5">
+               <div class="card col-3" *ngFor="let a of [1,2,3,4,5,6,7,8,9]">
+                  <img class="card-img-top" src="./assets/img-example.jpg" alt="Card image cap">
+                  <div class="card-body">
+                     <h5 class="card-title">Imagen ejemplo</h5>
+                     <p class="card-text">Detalle de la imagen.</p>
+                     <a class="btn btn-primary">Agregar</a>
+                  </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
