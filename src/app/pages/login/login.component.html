@@ -1,3 +1,5 @@
+
+<app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
 <app-cargando *ngIf="cargando"></app-cargando>
 <div class="login row d-flex justify-content-center px-0" >
     <div class="row d-flex justify-content-center col-11 px-0">
@@ -6,14 +8,14 @@
             <div class="card-body">
               <h5 class="card-title">Bienvenidos</h5>
               <div class="form-group">
-                <input type="text" name="email" class="form-control mb-4" placeholder="Correo"  #emailSignup />
+                <input type="text" name="email" class="form-control mb-4" placeholder="Correo" [(ngModel)]="correo"  #emailSignup />
                   </div>
                   <div class="form-group">
-                      <input type="password"  id="password" class="form-control mb-4"  placeholder="Contraseña"  showHideInput #passwordSignup/> 
+                      <input type="password"  id="password" class="form-control mb-4"  placeholder="Contraseña" [(ngModel)]="clave"  showHideInput #passwordSignup/> 
                       <i matSuffix
                       class="material-icons"></i>
                   </div>
-                  <button class="btn btn-block" (click)="signIn()" routerLink="/generacion-reportes" routerLinkActive="active">Iniciar sesión</button>
+                  <button class="btn btn-block" (click)="signIn(correo,clave)">Iniciar sesión</button>
             </div>
         </div>
       </div>

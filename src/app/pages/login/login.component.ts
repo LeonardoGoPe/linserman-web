@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,21 +10,33 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  title = 'angular';
+  mostrarMensaje: boolean = false;
+  mensaje: any;
+  codigoRespuestaHttp: any;
+
   isSignedIn = false;
   showPassword=false;
   passwordIcon='eye';
   contrasenia: any;
   cargando=false;
 
+  servicio: any;
+  notificacionTransporter: any;
+  uploadForm: any ; 
+  esReserva = false;
+  formaPago:any;
+  tipovehiculo:any;
+
+  correo: any;
+  clave: any;
+
   @Output() isLogout = new EventEmitter<void>();
   @Output() isSignin = new EventEmitter<boolean>();
-  user:any;
-  email:any;
 
   constructor(
-    //private authService: AuthService,
+    private authService: AuthService,
     private router: Router,
+    private formBuilder: FormBuilder
     ) { }
 
   ngOnInit(): void {
@@ -33,10 +47,51 @@ export class LoginComponent implements OnInit {
       this.isSignedIn = false
       this.isSignin.emit(false);
     }*/
+
+    this.uploadForm = this.formBuilder.group({
+      username: [''],
+      password: [''],
+    });
   }
 
-  signIn(){
-    this.router.navigateByUrl('/generacion-reportes');
+  accionMostrarMensaje(mensaje:string,codigo:number){
+    this.mensaje = mensaje;
+    this.codigoRespuestaHttp = codigo;
+    this.mostrarMensaje = true;
+    setTimeout(() => {
+      this.mostrarMensaje = false;
+    }, 500);
+
+  }
+
+  signIn(correo: any,clave: any){
+
+    this.uploadForm.get('username').setValue(correo);
+    this.uploadForm.get('password').setValue(clave);
+    console.log(this.uploadForm)
+
+    var formData: any = new FormData();
+    formData.append("username", this.uploadForm.get('username').value);
+    formData.append("password", this.uploadForm.get('password').value);
+    console.log(formData)
+
+    this.cargando=true;
+    this.authService.apiLogin(formData).subscribe((data: any) =>{
+      console.log(data.data.tipo_usuario)
+      localStorage.setItem('token',data.data.token);
+
+      console.log(localStorage.getItem('token'))
+
+      if(data.data.tipo_usuario != 3){
+        this.accionMostrarMensaje("El usuario existe, pero no es administrador",data.code)
+      }else{
+        this.router.navigateByUrl('/generacion-reportes');
+      }
+      this.cargando=false;
+    }, err =>{
+      this.accionMostrarMensaje(err.error.data,err.error.code)
+      this.cargando=false;
+    })
   }
 
   iconPassword(){

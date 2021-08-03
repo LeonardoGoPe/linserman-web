@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,8 +15,16 @@ import { GeneracionReportesComponent } from './pages/modulos/generacion-reportes
 import { InformacionComponent } from './pages/modulos/informacion/informacion.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlertaComponent } from './components/alerta/alerta.component';
+import { ModalCrearContratoComponent } from './pages/modulos/contratos/components/modal-crear-contrato/modal-crear-contrato.component';
+import { HttpClientModule } from '@angular/common/http';    // add this
+import { UsuariosService } from './services/usuarios.service';    // add this
+
+import { AngularFireModule } from '@angular/fire';
+
+import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -31,15 +39,23 @@ import { FormBuilder, FormsModule } from '@angular/forms';
     ReportesComponent,
     GeneracionReportesComponent,
     InformacionComponent,
+    AlertaComponent,
+    ModalCrearContratoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ShowHidePasswordModule,
     FormsModule,
-    MDBBootstrapModule.forRoot()
+    ReactiveFormsModule,
+    HttpClientModule,
+    MDBBootstrapModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    
+
   ],
-  providers: [],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  providers: [UsuariosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

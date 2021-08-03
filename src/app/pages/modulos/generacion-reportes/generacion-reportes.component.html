@@ -31,15 +31,31 @@
                 </div>
             </div>
             <div class="row d-flex pt-5">
-               <div class="card col-3" *ngFor="let a of [1,2,3,4,5,6,7,8,9]">
+               <div class="card col-3" *ngFor="let item of arrayExample">
                   <img class="card-img-top" src="./assets/img-example.jpg" alt="Card image cap">
                   <div class="card-body">
                      <h5 class="card-title">Imagen ejemplo</h5>
-                     <p class="card-text">Detalle de la imagen.</p>
-                     <a class="btn btn-primary">Agregar</a>
+                     <p class="card-text">{{item.id}}</p>
+                     <button 
+                        *ngIf="!item.add" 
+                        class="btn btn-primary"
+                        (click)="agregarItem(item)">
+                            Agregar
+                    </button>
+
+                    <button 
+                        *ngIf="item.add" 
+                        class="btn btn-danger"
+                        (click)="quitarItem(item)">
+                            Quitar
+                    </button>
                   </div>
                </div>
             </div>
+            <button 
+                (click)="download()">
+                    Quitar
+            </button>
         </div>
     </div>
 </div>

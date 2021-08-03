@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-crear-contrato',
@@ -8,9 +10,20 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 })
 export class ModalCrearContratoComponent implements OnInit {
 
+  constructor(
+    private modalService: NgbModal,
+  ) { }
+
+  showMessageConfirm = false;
+  message='¡El contrato no ha podido ser creado!';
+  codigoRespuestaHttp:number=400;
+
+  tiempo: number = 3000;
+  codigo: number = 500;
+  icono:any = 'success';
+
   ngOnInit(): void {
   }
-  title = 'Template driven forms';
  
   UbicacionList:Ubicacion[] = [
     new Ubicacion("1", "Garzota"),
@@ -26,6 +39,32 @@ export class ModalCrearContratoComponent implements OnInit {
     new Actividad('2', 'Limpieza superficial'),
     new Actividad('3', 'Limpieza de interiores')
   ];
+
+  showToast(){
+    console.log("toas")
+    if( this.codigo >= 200 && this.codigo < 300   ){
+        this.icono = 'success';
+      }
+      if( this.codigo >= 400 && this.codigo < 500   ){
+        this.icono = 'error';
+      }
+      if( this.codigo >= 500 && this.codigo < 600   ){
+        this.icono = 'warning';
+      }
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: this.tiempo,
+        timerProgressBar: true,
+      })
+      
+      Toast.fire({
+        icon: this.icono,
+        title: this.message
+      })
+  }
+
 }
  
 export class Ubicacion {

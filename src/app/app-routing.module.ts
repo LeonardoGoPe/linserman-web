@@ -1,19 +1,51 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
+import { ActividadesComponent } from './pages/modulos/actividades/actividades.component';
+import { ContratosComponent } from './pages/modulos/contratos/contratos.component';
+import { GeneracionReportesComponent } from './pages/modulos/generacion-reportes/generacion-reportes.component';
+import { InformacionComponent } from './pages/modulos/informacion/informacion.component';
+import { PersonalComponent } from './pages/modulos/personal/personal.component';
+import { ReportesComponent } from './pages/modulos/reportes/reportes.component';
+import { ServiciosComponent } from './pages/modulos/servicios/servicios.component';
 
 const routes: Routes = [
-  { path: 'actividades', loadChildren: () => import('./pages/modulos/actividades/actividades.module').then(m => m.ActividadesModule) },
-  { path: 'contratos',  loadChildren: () => import('./pages/modulos/contratos/contratos.module').then(m => m.ContratosModule) },
-  { path: 'servicios', loadChildren: () => import('./pages/modulos/servicios/servicios.module').then(m => m.ServiciosModule) },
-  { path: 'personal', loadChildren: () => import('./pages/modulos/personal/personal.module').then(m => m.PersonalModule)},
-  { path: 'informacion', loadChildren: () => import('./pages/modulos/informacion/informacion.module').then(m => m.InformacionModule)},
-  { path: 'generacion-reportes', loadChildren: () => import('./pages/modulos/generacion-reportes/generacion-reportes.module').then(m => m.GeneracionReportesModule)},
-  { path: 'reportes', loadChildren: () => import('./pages/modulos/reportes/reportes.module').then(m => m.ReportesModule)},
-  {  
-    path:'login',
-    component:LoginComponent,
+  { 
+    path: '',   redirectTo: '/login', pathMatch: 'full' 
   },
+
+  { 
+    path: 'actividades', component:ActividadesComponent 
+  },
+
+  { 
+    path: 'contratos',  component:ContratosComponent 
+   },
+
+  { 
+    path: 'servicios', component:ServiciosComponent 
+  },
+
+  { 
+    path: 'personal', component:PersonalComponent
+  },
+
+  { 
+    path: 'informacion', component:InformacionComponent
+  },
+
+  { 
+    path: 'generacion-reportes', component:GeneracionReportesComponent
+  },
+
+  { 
+    path: 'reportes', component:ReportesComponent
+  },
+
+  {  
+    path:'login',component:LoginComponent,
+  },
+  
 ];
 
 @NgModule({
