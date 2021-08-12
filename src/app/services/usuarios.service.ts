@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
@@ -13,7 +12,14 @@ export class UsuariosService {
 
   getUsuarios() {
     return this.apiService.ApiCall(
-      `/usuarios/`,
+      `usuarios/`,
+      "GET",
+    );
+  }
+
+  getUsuariosPorRol(tipo_usuario: any) {
+    return this.apiService.ApiCall(
+      `usuarios/?tipo_usuario=${tipo_usuario}`,
       "GET",
     );
   }

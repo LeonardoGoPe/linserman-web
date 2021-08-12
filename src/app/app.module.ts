@@ -8,7 +8,6 @@ import { NavegacionComponent } from './components/navegacion/navegacion.componen
 import { LoginComponent } from './pages/login/login.component';
 import { PersonalComponent } from './pages/modulos/personal/personal.component';
 import { ContratosComponent } from './pages/modulos/contratos/contratos.component';
-import { ServiciosComponent } from './pages/modulos/servicios/servicios.component';
 import { ActividadesComponent } from './pages/modulos/actividades/actividades.component';
 import { ReportesComponent } from './pages/modulos/reportes/reportes.component';
 import { GeneracionReportesComponent } from './pages/modulos/generacion-reportes/generacion-reportes.component';
@@ -24,6 +23,7 @@ import { UsuariosService } from './services/usuarios.service';    // add this
 import { AngularFireModule } from '@angular/fire';
 
 import { environment } from 'src/environments/environment';
+import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
 
 
 @NgModule({
@@ -34,13 +34,13 @@ import { environment } from 'src/environments/environment';
     LoginComponent,
     PersonalComponent,
     ContratosComponent,
-    ServiciosComponent,
     ActividadesComponent,
     ReportesComponent,
     GeneracionReportesComponent,
     InformacionComponent,
     AlertaComponent,
-    ModalCrearContratoComponent
+    ModalCrearContratoComponent,
+    SectoresComponent
   ],
   imports: [
     BrowserModule,

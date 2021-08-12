@@ -4,13 +4,13 @@ import { GeneralesService } from 'src/app/services/generales.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
-  selector: 'app-actividades',
-  templateUrl: './actividades.component.html',
-  styleUrls: ['./actividades.component.scss']
+  selector: 'app-sectores',
+  templateUrl: './sectores.component.html',
+  styleUrls: ['./sectores.component.scss']
 })
-export class ActividadesComponent implements OnInit {
+export class SectoresComponent implements OnInit {
 
-  actividadesList: any = []
+  sectoresList: any = []
 
   constructor(
     private modalService: NgbModal,
@@ -19,8 +19,8 @@ export class ActividadesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.generalesService.getActividades()?.subscribe((data: any) =>{
-      this.actividadesList = data.data
+    this.generalesService.getSectores()?.subscribe((data: any) =>{
+      this.sectoresList = data.data
       console.log(data)
     })
   }

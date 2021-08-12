@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     }*/
 
     this.uploadForm = this.formBuilder.group({
-      username: [''],
+      correo: [''],
       password: [''],
     });
   }
@@ -66,12 +66,12 @@ export class LoginComponent implements OnInit {
 
   signIn(correo: any,clave: any){
 
-    this.uploadForm.get('username').setValue(correo);
+    this.uploadForm.get('correo').setValue(correo);
     this.uploadForm.get('password').setValue(clave);
     console.log(this.uploadForm)
 
     var formData: any = new FormData();
-    formData.append("username", this.uploadForm.get('username').value);
+    formData.append("correo", this.uploadForm.get('correo').value);
     formData.append("password", this.uploadForm.get('password').value);
     console.log(formData)
 

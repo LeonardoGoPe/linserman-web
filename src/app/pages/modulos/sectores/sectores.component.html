@@ -31,17 +31,19 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">Código de actividad</th>
-                        <th class="nameCliente" scope="col">Nemónico actividad</th>
-                        <th scope="col">Nombre de la actividad</th>
+                        <th scope="col">Código de sector</th>
+                        <th class="nameCliente" scope="col">Ciudad</th>
+                        <th scope="col">Nombre del sector</th>
+                        <th scope="col">Punto cardinal</th>
                         <th scope="col">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let actividad of actividadesList">
-                        <td>{{actividad.id_actividad}}</td>
-                        <td>{{actividad.nemonico_actividad}}</td>
-                        <td>{{actividad.texto_descripcion}}</td>
+                      <tr *ngFor="let sectores of sectoresList">
+                        <td>{{sectores.id_sector}}</td>
+                        <td>{{sectores.ciudad}}</td>
+                        <td>{{sectores.sector}}</td>
+                        <td>{{sectores.punto_cardinal}}</td>
                         <td class="accions">
                            <img alt="search" src="assets/editar.svg">
                            <img alt="search" src="assets/eliminar.svg">

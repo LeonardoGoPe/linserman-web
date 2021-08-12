@@ -12,6 +12,14 @@ table tr td h3 {
    margin-bottom: 1rem;
 }
 
+select{
+   height: 2rem;
+
+   &.seleccion-multiple{
+      height: 8rem;
+   }
+}
+
 *{
    font-size: 14px;
 }

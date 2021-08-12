@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralesService } from 'src/app/services/generales.service';
 import { ModalCrearContratoComponent } from './components/modal-crear-contrato/modal-crear-contrato.component';
 
 @Component({
@@ -9,20 +10,27 @@ import { ModalCrearContratoComponent } from './components/modal-crear-contrato/m
 })
 export class ContratosComponent implements OnInit {
 
+  arrayContratos: any = []
+
   constructor(
     private modalService: NgbModal,
+    private generalesService: GeneralesService,
   ) { }
 
   ngOnInit(): void {
+    this.generalesService.getContratos()?.subscribe((data: any) =>{
+      this.arrayContratos = data.data
+      console.log(data)
+    })
   }
 
   crearContrato() {
-    const inactivarModal = this.modalService.open(ModalCrearContratoComponent, {
+    const modalCrearContrato = this.modalService.open(ModalCrearContratoComponent, {
         size: "md", 
         windowClass: '' 
     });
-    inactivarModal.componentInstance.tipoModal = "remover";
-    inactivarModal.componentInstance.emitRemoverAfiliado.subscribe((emmitedValue: any) => {
+    modalCrearContrato.componentInstance.tipoModal = "remover";
+    modalCrearContrato.componentInstance.emitRemoverAfiliado.subscribe((emmitedValue: any) => {
       
     });
 }

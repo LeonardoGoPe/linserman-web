@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralesService } from 'src/app/services/generales.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,79 +12,99 @@ import Swal from 'sweetalert2';
 })
 export class ModalCrearContratoComponent implements OnInit {
 
+  UbicacionList: any = []
+  ActividadesList: any = []
+
+  arrayFiscalizadores: any = []
+  arraySupervisores: any = []
+
+  fiscalizadorSeleccionado: any;
+  supervisorSeleccionado: any;
+  sectorSeleccionado: any;
+  actividadesSeleccionadas: any = [];
+
+  data: any = {
+    usuarios: null,
+    sectores: [],
+    descripcion: null,
+    nombre_contrato: null
+  }
+
   constructor(
     private modalService: NgbModal,
+    private generalesService: GeneralesService,
+    private usuariosServices: UsuariosService
   ) { }
 
-  showMessageConfirm = false;
-  message='¡El contrato no ha podido ser creado!';
-  codigoRespuestaHttp:number=400;
-
-  tiempo: number = 3000;
-  codigo: number = 500;
-  icono:any = 'success';
+  mostrarMensaje: boolean = false;
+  mensaje: any;
+  codigoRespuestaHttp: any;
 
   ngOnInit(): void {
-  }
- 
-  UbicacionList:Ubicacion[] = [
-    new Ubicacion("1", "Garzota"),
-    new Ubicacion('2', 'Alborada'),
-    new Ubicacion('3', 'Urdesa'),
-    new Ubicacion('3', 'Samanes 6'),
-    new Ubicacion('3', 'Sauces 7'),
-    new Ubicacion('3', 'Guayacanes'),
-  ];
 
-  ActividadesList:Actividad[] = [
-    new Actividad("1", "Limpieza profunda"),
-    new Actividad('2', 'Limpieza superficial'),
-    new Actividad('3', 'Limpieza de interiores')
-  ];
+    this.generalesService.getSectores()?.subscribe((data: any) =>{
+      this.UbicacionList = data.data
+      console.log(data)
+    })
 
-  showToast(){
-    console.log("toas")
-    if( this.codigo >= 200 && this.codigo < 300   ){
-        this.icono = 'success';
-      }
-      if( this.codigo >= 400 && this.codigo < 500   ){
-        this.icono = 'error';
-      }
-      if( this.codigo >= 500 && this.codigo < 600   ){
-        this.icono = 'warning';
-      }
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: this.tiempo,
-        timerProgressBar: true,
-      })
-      
-      Toast.fire({
-        icon: this.icono,
-        title: this.message
-      })
+    this.generalesService.getActividades()?.subscribe((data: any) =>{
+      this.ActividadesList = data.data
+      console.log(data)
+    })
+
+    //Codigo 2 es fiscalizador
+    this.usuariosServices.getUsuariosPorRol(2)?.subscribe((data: any) =>{
+      this.arrayFiscalizadores = data.data
+      console.log(data)
+    })
+
+    //Codigo 1 es supervisor
+    this.usuariosServices.getUsuariosPorRol(1)?.subscribe((data: any) =>{
+      this.arraySupervisores = data.data
+      console.log(data)
+    })
+
   }
 
-}
- 
-export class Ubicacion {
-  id:string;
-  name:string;
- 
-  constructor(id:string, name:string) {
-    this.id=id;
-    this.name=name;
-  }
-}
 
-export class Actividad {
-  id:string;
-  name:string;
- 
-  constructor(id:string, name:string) {
-    this.id=id;
-    this.name=name;
+  accionMostrarMensaje(mensaje:string,codigo:number){
+    this.mensaje = mensaje;
+    this.codigoRespuestaHttp = codigo;
+    this.mostrarMensaje = true;
+    setTimeout(() => {
+      this.mostrarMensaje = false;
+    }, 500);
+  }
+
+  closeModal(){
+    this.modalService.dismissAll();
+  }
+
+  crearContrato(){
+    console.log(this.fiscalizadorSeleccionado, this.supervisorSeleccionado)
+    console.log(this.actividadesSeleccionadas, this.supervisorSeleccionado)
+    
+    let usuarios: any = []
+    usuarios.push(this.fiscalizadorSeleccionado)
+    usuarios.push(this.supervisorSeleccionado)
+
+    let sectores: any = {
+      sector_data: null,
+      actividades: null,
+    }
+
+    sectores.sector_data = this.sectorSeleccionado
+    sectores.actividades = this.actividadesSeleccionadas
+
+    this.data.usuarios = usuarios
+    this.data.sectores.push(sectores)
+
+    console.log(this.data)
+
+    this.generalesService.postContratos(this.data)?.subscribe((data: any) =>{
+      console.log(data)
+      this.accionMostrarMensaje("Contrato creado con éxito",200)
+      this.modalService.dismissAll();
+    })
   }
 }

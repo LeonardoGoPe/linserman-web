@@ -38,12 +38,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let cliente of [1,2,3,4,5,6,7]">
-                        <td>Personal {{cliente}}</td>
-                        <td>Identificación de la persona {{cliente}}</td>
+                      <tr *ngFor="let personal of listaPersonal">
+                        <td>{{personal.nombres}} {{personal.apellidos}}</td>
+                        <td>{{personal.cedula}}</td>
                         <td>
-                           <span *ngIf="cliente==1|| cliente==3|| cliente==5 || cliente==7" >Supervisor</span>
-                           <span *ngIf="cliente==2|| cliente==4|| cliente==6" >Administrador</span>
+                           <span *ngIf="personal.tipo_usuario==1" >Supervisor</span>
+                           <span *ngIf="personal.tipo_usuario==2" >Fiscalizador</span>
+                           <span *ngIf="personal.tipo_usuario==3" >Administrador</span>
                         </td>
                         <td class="accions">
                            <img alt="search" src="assets/editar.svg">

@@ -5,6 +5,8 @@ import { Packer } from "docx";
 
 import { informacion, contrato, experiences, education, skills, achievements } from "src/app/components/generador_archivo/docx/cv";
 import { DocumentCreator } from "src/app/components/generador_archivo/docx/generador_docx";
+import { PlantillaContrato } from "src/app/components/generador_archivo/docx/plantilla_contrato";
+import { PlantillaGeneral } from "src/app/components/generador_archivo/docx/plantilla_general";
 
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
@@ -82,22 +84,49 @@ export class GeneracionReportesComponent implements OnInit {
     console.log(this.arrayExample)
   }
 
-  public getBase64(event:any) {
-    let me = this;
-    let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      //me.modelvalue = reader.result;
-      console.log(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
+  public descargaPlantillaGeneral(): void{
+    const generarPlantillaGeneral = new PlantillaGeneral();
+    const documento = generarPlantillaGeneral.crearDocumento([
+      this.arrayImages,
+      contrato,
+      informacion
+    ]);
+
+    Packer.toBlob(documento).then(blob => {
+      console.log(blob);
+      saveAs(blob, "ejemplGeneral.docx");
+      console.log("Document created successfully");
+    });
+  }
+
+
+
+  public descargaPlantillaContrato(): void{
+    const generarPlantillaContrato = new PlantillaContrato();
+    const documento = generarPlantillaContrato.crearDocumento([
+      this.arrayImages,
+      contrato,
+      informacion
+    ]);
+
+    Packer.toBlob(documento).then(blob => {
+      console.log(blob);
+      saveAs(blob, "ejemploContrato.docx");
+      console.log("Document created successfully");
+    });
   }
 
   public download(): void {
-    const documentCreator = new DocumentCreator();
+
+    const generarPlantillaContrato = new PlantillaContrato();
+    const documento = generarPlantillaContrato.crearDocumento([
+      this.arrayImages,
+      contrato,
+      informacion
+    ]);
+
+
+    /*const documentCreator = new DocumentCreator();
     const doc = documentCreator.create([
       this.arrayImages,
       contrato,
@@ -106,9 +135,9 @@ export class GeneracionReportesComponent implements OnInit {
       education,
       skills,
       achievements
-    ]);
+    ]);*/
 
-    Packer.toBlob(doc).then(blob => {
+    Packer.toBlob(documento).then(blob => {
       console.log(blob);
       saveAs(blob, "example.docx");
       console.log("Document created successfully");

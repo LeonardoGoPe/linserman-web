@@ -7,7 +7,7 @@ import { GeneracionReportesComponent } from './pages/modulos/generacion-reportes
 import { InformacionComponent } from './pages/modulos/informacion/informacion.component';
 import { PersonalComponent } from './pages/modulos/personal/personal.component';
 import { ReportesComponent } from './pages/modulos/reportes/reportes.component';
-import { ServiciosComponent } from './pages/modulos/servicios/servicios.component';
+import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
 
 const routes: Routes = [
   { 
@@ -23,7 +23,7 @@ const routes: Routes = [
    },
 
   { 
-    path: 'servicios', component:ServiciosComponent 
+    path: 'sectores', component:SectoresComponent 
   },
 
   { 

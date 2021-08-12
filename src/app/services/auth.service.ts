@@ -11,7 +11,8 @@ export class AuthService {
   public user = new BehaviorSubject<any>(null);
   private token: any;
 
-  URL_API = 'http://127.0.0.1:8000/api'
+  URL_API = 'http://127.0.0.1:8000/api/'
+  //URL_API = 'http://linserman.pythonanywhere.com/api/'
 
   isLogged = false
   constructor(
@@ -21,7 +22,7 @@ export class AuthService {
 
   apiLogin(credentials: any){
     let headers = new HttpHeaders(); 
-    return this.http.post(this.URL_API+'/login', credentials, {headers: headers});
+    return this.http.post(this.URL_API+'login', credentials, {headers: headers});
   }
 
   autoLogin() {
