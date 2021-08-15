@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';    // add this
 import { UsuariosService } from './services/usuarios.service';    // add this
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule  } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { environment } from 'src/environments/environment';
 import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
@@ -51,6 +53,8 @@ import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
     
 
   ],

@@ -4,9 +4,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Packer } from "docx";
 
 import { informacion, contrato, experiences, education, skills, achievements } from "src/app/components/generador_archivo/docx/cv";
-import { DocumentCreator } from "src/app/components/generador_archivo/docx/generador_docx";
 import { PlantillaContrato } from "src/app/components/generador_archivo/docx/plantilla_contrato";
 import { PlantillaGeneral } from "src/app/components/generador_archivo/docx/plantilla_general";
+import { map } from 'rxjs/operators';
 
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
@@ -25,6 +25,8 @@ export class GeneracionReportesComponent implements OnInit {
 
   arrayImages: any = []
 
+  fileUploads: any = [];
+
 
 
   constructor(
@@ -38,6 +40,17 @@ export class GeneracionReportesComponent implements OnInit {
     this.arrayExample.push({"id":2,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":3,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":4,"descripcion":"algo","add":false})
+
+    this.firebaseService.getFiles(6).snapshotChanges().pipe(
+      map(changes =>
+        // store the key
+        changes.map(c => ({ key: c.payload.key}))
+      )
+    ).subscribe(fileUploads => {
+      this.fileUploads = fileUploads;
+    });
+
+    console.log(this.fileUploads)
 
     this.http.get('./assets/img-example.jpg', { responseType: 'blob' }).subscribe(res => {
       const reader = new FileReader();
