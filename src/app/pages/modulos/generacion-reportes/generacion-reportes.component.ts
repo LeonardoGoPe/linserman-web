@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-generacion-reportes',
@@ -24,15 +25,14 @@ export class GeneracionReportesComponent implements OnInit {
   arrayExample:any=[]
 
   arrayImages: any = []
-
-  fileUploads: any = [];
-
+  cloudFiles:any=[]
 
 
   constructor(
     private usuariosService: UsuariosService,
     private firebaseService: FirebaseService,
-    public http: HttpClient
+    public http: HttpClient,
+    private fStorage: AngularFireStorage
   ) { }
 
   ngOnInit(): void {
@@ -41,24 +41,13 @@ export class GeneracionReportesComponent implements OnInit {
     this.arrayExample.push({"id":3,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":4,"descripcion":"algo","add":false})
 
-    this.firebaseService.getFiles(6).snapshotChanges().pipe(
-      map(changes =>
-        // store the key
-        changes.map(c => ({ key: c.payload.key}))
-      )
-    ).subscribe(fileUploads => {
-      this.fileUploads = fileUploads;
-    });
-
-    console.log(this.fileUploads)
-
     this.http.get('./assets/img-example.jpg', { responseType: 'blob' }).subscribe(res => {
       const reader = new FileReader();
       reader.onloadend = () => {
         var base64data = reader.result;                
             console.log(base64data);
       }
-
+      this.getAllImages();
       reader.readAsDataURL(res); 
       console.log(res);
       this.arrayImages.push(res)
@@ -84,7 +73,7 @@ export class GeneracionReportesComponent implements OnInit {
       console.log(err)
     })
   }
-
+  
   agregarItem(item: any){
     let index = this.arrayExample.findIndex((element: any) => element.id == item.id )
     this.arrayExample[index].add = true;
@@ -112,7 +101,16 @@ export class GeneracionReportesComponent implements OnInit {
     });
   }
 
-
+  getAllImages(){
+    console.log("de firebase")
+    this.fStorage.ref(`contratos/pruebas`).listAll().subscribe((res)=>{
+      console.log(res);
+      res.items.forEach(element => {
+        element.getDownloadURL().then(url=>    this.cloudFiles.push(url))
+        })
+        
+      });
+  }
 
   public descargaPlantillaContrato(): void{
     const generarPlantillaContrato = new PlantillaContrato();
