@@ -52,6 +52,28 @@
                   </div>
                </div>
             </div>
+            <div class="row d-flex pt-5">
+                <div class="card col-3" *ngFor="let item of cloudFiles">
+                   <img class="card-img-top"  [src]="item" width="267" height="200" alt="Card image cap">
+                   <div class="card-body">
+                      <h5 class="card-title">Imagen ejemplo</h5>
+                      <p class="card-text"></p>
+                      <button 
+                         *ngIf="!item.add" 
+                         class="btn btn-primary"
+                         (click)="agregarItem(item)">
+                             Agregar
+                     </button>
+ 
+                     <button 
+                         *ngIf="item.add" 
+                         class="btn btn-danger"
+                         (click)="quitarItem(item)">
+                             Quitar
+                     </button>
+                   </div>
+                </div>
+             </div>
             <button type="button" class="btn btn-success m-2"
                 (click)="descargaPlantillaGeneral()">
                     Plantilla General
