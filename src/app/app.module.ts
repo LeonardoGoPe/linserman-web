@@ -21,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';    // add this
 import { UsuariosService } from './services/usuarios.service';    // add this
 
 import { AngularFireModule } from '@angular/fire';
-
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
 
@@ -48,6 +49,8 @@ import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
     ShowHidePasswordModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireDatabaseModule,            // imports firebase/database, only needed for database features
+    AngularFireStorageModule,
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),

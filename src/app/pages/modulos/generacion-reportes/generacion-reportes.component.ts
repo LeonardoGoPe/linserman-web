@@ -10,6 +10,7 @@ import { PlantillaGeneral } from "src/app/components/generador_archivo/docx/plan
 
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-generacion-reportes',
@@ -24,13 +25,14 @@ export class GeneracionReportesComponent implements OnInit {
   arrayExample:any=[]
 
   arrayImages: any = []
-
+  cloudFiles:any=[]
 
 
   constructor(
     private usuariosService: UsuariosService,
     private firebaseService: FirebaseService,
-    public http: HttpClient
+    public http: HttpClient,
+    private fStorage: AngularFireStorage
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class GeneracionReportesComponent implements OnInit {
         var base64data = reader.result;                
             console.log(base64data);
       }
-
+      this.getAllImages();
       reader.readAsDataURL(res); 
       console.log(res);
       this.arrayImages.push(res)
@@ -71,7 +73,7 @@ export class GeneracionReportesComponent implements OnInit {
       console.log(err)
     })
   }
-
+  
   agregarItem(item: any){
     let index = this.arrayExample.findIndex((element: any) => element.id == item.id )
     this.arrayExample[index].add = true;
@@ -99,7 +101,16 @@ export class GeneracionReportesComponent implements OnInit {
     });
   }
 
-
+  getAllImages(){
+    console.log("de firebase")
+    this.fStorage.ref(`contratos/pruebas`).listAll().subscribe((res)=>{
+      console.log(res);
+      res.items.forEach(element => {
+        element.getDownloadURL().then(url=>    this.cloudFiles.push(url))
+        })
+        
+      });
+  }
 
   public descargaPlantillaContrato(): void{
     const generarPlantillaContrato = new PlantillaContrato();
