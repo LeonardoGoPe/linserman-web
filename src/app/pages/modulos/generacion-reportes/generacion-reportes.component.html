@@ -31,30 +31,8 @@
                 </div>
             </div>
             <div class="row d-flex pt-5">
-               <div class="card col-3" *ngFor="let item of arrayExample">
-                  <img class="card-img-top" src="./assets/img-example.jpg" alt="Card image cap">
-                  <div class="card-body">
-                     <h5 class="card-title">Imagen ejemplo</h5>
-                     <p class="card-text">{{item.id}}</p>
-                     <button 
-                        *ngIf="!item.add" 
-                        class="btn btn-primary"
-                        (click)="agregarItem(item)">
-                            Agregar
-                    </button>
-
-                    <button 
-                        *ngIf="item.add" 
-                        class="btn btn-danger"
-                        (click)="quitarItem(item)">
-                            Quitar
-                    </button>
-                  </div>
-               </div>
-            </div>
-            <div class="row d-flex pt-5">
-                <div class="card col-3" *ngFor="let item of cloudFiles">
-                   <img class="card-img-top"  [src]="item" width="267" height="200" alt="Card image cap">
+                <div class="card col-3" *ngFor="let item of cloudFiles | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                   <img class="card-img-top"  [src]="item.url" width="267" height="200" alt="Card image cap">
                    <div class="card-body">
                       <h5 class="card-title">Imagen ejemplo</h5>
                       <p class="card-text"></p>
@@ -73,7 +51,11 @@
                      </button>
                    </div>
                 </div>
-             </div>
+            </div>
+            <!--Including the pagination control.-->
+            <div class="d-flex flex-row-reverse mt-4">
+                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>
             <button type="button" class="btn btn-success m-2"
                 (click)="descargaPlantillaGeneral()">
                     Plantilla General

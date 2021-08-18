@@ -25,6 +25,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NombrecontratoPipe } from './pipes/nombrecontrato.pipe';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
     InformacionComponent,
     AlertaComponent,
     ModalCrearContratoComponent,
-    SectoresComponent
+    SectoresComponent,
+    NombrecontratoPipe,
   ],
   imports: [
     BrowserModule,
@@ -55,9 +58,8 @@ import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
     MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireStorageModule
-    
-
+    AngularFireStorageModule,
+    NgxPaginationModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [UsuariosService],

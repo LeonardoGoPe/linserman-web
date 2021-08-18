@@ -19,6 +19,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class GeneracionReportesComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 8;
 
   cargando=false;
 
@@ -41,21 +43,20 @@ export class GeneracionReportesComponent implements OnInit {
     this.arrayExample.push({"id":3,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":4,"descripcion":"algo","add":false})
 
-    this.http.get('./assets/img-example.jpg', { responseType: 'blob' }).subscribe(res => {
+    this.getAllImages();
+
+    /*this.http.get('./assets/img-example.jpg', { responseType: 'blob' }).subscribe(res => {
       const reader = new FileReader();
       reader.onloadend = () => {
         var base64data = reader.result;                
-            console.log(base64data);
+            //console.log(base64data);
       }
-      this.getAllImages();
+      
       reader.readAsDataURL(res); 
       console.log(res);
-      this.arrayImages.push(res)
-    });
-
-
-
-
+      //this.arrayImages.push(res)
+      console.log(this.arrayImages);
+    });*/
 
     this.firebaseService.getContratos().subscribe((data: any) =>{
       console.log(data)
@@ -73,20 +74,59 @@ export class GeneracionReportesComponent implements OnInit {
       console.log(err)
     })
   }
+
+  getAllImages(){
+    console.log("de firebase")
+    let id: number = 0;
+    this.fStorage.ref(`contratos/pruebas`).listAll().subscribe((res)=>{
+      console.log(res);
+      res.items.forEach(element => {
+        element.getMetadata().then(data=>  {
+          let metaData: any = {}
+          metaData.datos = data.customMetadata
+            element.getDownloadURL().then(url=>  {
+              console.log(url)
+              //this.arrayImages.push(url)
+              this.cloudFiles.push({id:id,url:url,add:false,datos:metaData})
+              id++;
+            })
+          })
+        })
+      });
+  }
   
   agregarItem(item: any){
-    let index = this.arrayExample.findIndex((element: any) => element.id == item.id )
-    this.arrayExample[index].add = true;
-    console.log(this.arrayExample)
+    console.log(this.cloudFiles)
+    console.log(item)
+    item.add=true;
+    
+    this.http.get(item.url, { responseType: 'blob' }).subscribe(res => {
+      const reader = new FileReader();
+      /*reader.onloadend = () => {
+        var base64data = reader.result;                
+            //console.log(base64data);
+      }*/
+      reader.readAsDataURL(res); 
+      console.log(res);
+      this.arrayImages.push({id:item.id,res:res})
+      console.log(this.arrayImages)
+
+      /*let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
+      this.arrayImages[index].add = true;
+      console.log(this.arrayImages)*/
+    });
   }
 
   quitarItem(item: any){
-    let index = this.arrayExample.findIndex((element: any) => element.id == item.id )
-    this.arrayExample[index].add = false;
-    console.log(this.arrayExample)
+    item.add=false;
+
+    let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
+    this.arrayImages.splice(index, 1);
+    console.log(this.arrayImages)
   }
 
   public descargaPlantillaGeneral(): void{
+    //console.log(this.arrayImages)
     const generarPlantillaGeneral = new PlantillaGeneral();
     const documento = generarPlantillaGeneral.crearDocumento([
       this.arrayImages,
@@ -99,17 +139,6 @@ export class GeneracionReportesComponent implements OnInit {
       saveAs(blob, "ejemplGeneral.docx");
       console.log("Document created successfully");
     });
-  }
-
-  getAllImages(){
-    console.log("de firebase")
-    this.fStorage.ref(`contratos/pruebas`).listAll().subscribe((res)=>{
-      console.log(res);
-      res.items.forEach(element => {
-        element.getDownloadURL().then(url=>    this.cloudFiles.push(url))
-        })
-        
-      });
   }
 
   public descargaPlantillaContrato(): void{

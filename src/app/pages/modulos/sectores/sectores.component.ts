@@ -10,6 +10,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class SectoresComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 5;
+
   sectoresList: any = []
 
   constructor(

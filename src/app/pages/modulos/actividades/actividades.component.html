@@ -38,7 +38,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let actividad of actividadesList">
+                      <tr *ngFor="let actividad of actividadesList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                         <td>{{actividad.id_actividad}}</td>
                         <td>{{actividad.nemonico_actividad}}</td>
                         <td>{{actividad.texto_descripcion}}</td>
@@ -49,7 +49,10 @@
                       </tr>
                       
                     </tbody>
-                  </table>
+                </table>
+            </div>
+            <div class="d-flex flex-row-reverse mt-4">
+                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
             </div>
         </div>
     </div>

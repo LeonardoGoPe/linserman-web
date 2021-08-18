@@ -18,17 +18,22 @@ export class ModalCrearContratoComponent implements OnInit {
   arrayFiscalizadores: any = []
   arraySupervisores: any = []
 
-  fiscalizadorSeleccionado: any;
-  supervisorSeleccionado: any;
-  sectorSeleccionado: any;
-  actividadesSeleccionadas: any = [];
-
   data: any = {
-    usuarios: null,
     sectores: [],
     descripcion: null,
     nombre_contrato: null
   }
+
+  botonDisabled = true;
+
+  nombreContrato: any;
+  descripcionContrato: any;
+
+  sectorIngresado: any;
+  zonaReferencial: any;
+  supervisoresAignados: any = [];
+  fiscalizadoresAsignados: any = [];
+  actividadesAsignadas: any = [];
 
   constructor(
     private modalService: NgbModal,
@@ -66,6 +71,34 @@ export class ModalCrearContratoComponent implements OnInit {
 
   }
 
+  agregarOtroSector(){
+    let sectores: any = {
+      sector_data: null,
+      usuarios_supervisores: [],
+      usuarios_fiscalizadores: [],
+      actividades: [],
+      nombre_sector: null
+    }
+
+    sectores.nombre_sector = this.sectorIngresado
+    sectores.sector_data = this.zonaReferencial 
+    sectores.usuarios_fiscalizadores = this.fiscalizadoresAsignados
+    sectores.usuarios_supervisores = this.supervisoresAignados
+    sectores.actividades = this.actividadesAsignadas
+
+    console.log(sectores)
+    this.data.sectores.push(sectores)
+
+    this.sectorIngresado = null
+    this.zonaReferencial = null
+    this.fiscalizadoresAsignados = null
+    this.supervisoresAignados = null
+    this.actividadesAsignadas = null
+
+    console.log(this.data)
+    this.botonDisabled = false;
+  }
+
 
   accionMostrarMensaje(mensaje:string,codigo:number){
     this.mensaje = mensaje;
@@ -81,24 +114,10 @@ export class ModalCrearContratoComponent implements OnInit {
   }
 
   crearContrato(){
-    console.log(this.fiscalizadorSeleccionado, this.supervisorSeleccionado)
-    console.log(this.actividadesSeleccionadas, this.supervisorSeleccionado)
+
+    this.data.nombre_contrato = this.nombreContrato
+    this.data.descripcion = this.descripcionContrato
     
-    let usuarios: any = []
-    usuarios.push(this.fiscalizadorSeleccionado)
-    usuarios.push(this.supervisorSeleccionado)
-
-    let sectores: any = {
-      sector_data: null,
-      actividades: null,
-    }
-
-    sectores.sector_data = this.sectorSeleccionado
-    sectores.actividades = this.actividadesSeleccionadas
-
-    this.data.usuarios = usuarios
-    this.data.sectores.push(sectores)
-
     console.log(this.data)
 
     this.generalesService.postContratos(this.data)?.subscribe((data: any) =>{

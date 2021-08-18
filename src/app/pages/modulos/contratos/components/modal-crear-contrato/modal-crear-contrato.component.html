@@ -1,25 +1,47 @@
 <app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
-<form>
+<div>
    <div class="row d-flex justify-content-center mt-4">
-         <label class="row d-flex justify-content-center contrato col-12" for="firstname">Crear contrato</label>
+         <label><b class="row d-flex justify-content-center contrato col-12">Crear contrato</b></label>
    </div>
 
+   <div class="row d-flex justify-content-center px-2 mt-4">
+         <label class="row d-flex align-items-start flex-column contrato col-12 px-5"><b>Datos Principales</b></label>
+   </div>
 
    <div class="row d-flex justify-content-center">
          <label class="row col-5" for="firstname">Nombre del contrato</label>
-         <input class="row col-5" type="text" id="firstname" name="firstname" [(ngModel)]="data.nombre_contrato">
+         <input class="row col-5" type="text" [(ngModel)]="nombreContrato">
    </div>
 
    <div class="row d-flex justify-content-center">
          <label class="row col-5" for="firstname">Descripción del contrato</label>
-         <textarea class="row col-5" type="text" id="firstname" name="firstname" [(ngModel)]="data.descripcion"></textarea>
+         <textarea class="row col-5" type="text" [(ngModel)]="descripcionContrato"></textarea>
    </div>
 
+
+
    
+   <div class="row d-flex justify-content-center px-2 mt-4">
+         <label class="row d-flex align-items-start flex-column contrato col-12 px-5"><b>Información del contrato ({{data.sectores.length}})</b></label>
+   </div>
 
    <div class="row d-flex justify-content-center">
-      <label class="row col-5" for="firstname">Supervisor asignado</label>
-      <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="supervisorSeleccionado">
+         <label class="row col-5" for="firstname">Sector</label>
+         <input class="row col-5" type="text" [(ngModel)]="sectorIngresado">
+   </div>
+
+   <div class="row d-flex justify-content-center">
+      <label class="row col-5" for="firstname">Zona referencial</label>
+      <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="zonaReferencial">
+         <option [ngValue]="c.id_sector" *ngFor="let c of UbicacionList">
+            {{c.ciudad}} - {{c.zona_ciudad}}
+         </option>
+      </select>
+   </div>
+
+   <div class="row d-flex justify-content-center">
+      <label class="row col-5" for="firstname">Supervisor(es) asignado(s)</label>
+      <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="supervisoresAignados">
          <option [ngValue]="c.id" *ngFor="let c of arraySupervisores">
             {{c.apellidos}} {{c.nombres}}
          </option>
@@ -27,8 +49,8 @@
    </div>
 
    <div class="row d-flex justify-content-center">
-      <label class="row col-5" for="firstname">Fiscalizador asignado</label>
-      <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="fiscalizadorSeleccionado">
+      <label class="row col-5" for="firstname">Fiscalizador(es) asignado(s)</label>
+      <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="fiscalizadoresAsignados">
          <option [ngValue]="c.id" *ngFor="let c of arrayFiscalizadores">
             {{c.apellidos}} {{c.nombres}}
          </option>
@@ -36,40 +58,35 @@
    </div>
 
    <div class="row d-flex justify-content-center">
-      <label class="row col-5" for="firstname">Sectores</label>
-      <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="sectorSeleccionado">
-         <option [ngValue]="c.id_sector" *ngFor="let c of UbicacionList">
-            {{c.ciudad}}-{{c.sector}}
-         </option>
-      </select>
-   </div>
-
-   <div class="row d-flex justify-content-center">
       <label class="row col-5" for="firstname">Actividades</label>
-      <select class="row seleccion-multiple col-5" name="Ubicacion" id="Ubicacion" multiple="multiple" [(ngModel)]="actividadesSeleccionadas">
+      <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="actividadesAsignadas">
          <option [ngValue]="c.id_actividad" *ngFor="let c of ActividadesList">
             {{c.texto_descripcion}}
          </option>
       </select>
    </div>
 
-   <div class="row d-flex justify-content-center">
-         <label class="row addActividad col-5" for="firstname">+Añadir actividad</label>
+   <div class="row d-flex justify-content-center px-5">
+      <div class="form-group row col-7 d-flex justify-content-centerbuttons search">
+         <button class="btn btn-warning" (click)="agregarOtroSector()">
+            + Agregar otro sector
+         </button>
+      </div>
    </div>
 
 
    <div class="row col-12 d-flex justify-content-around">
       <div class="form-group row col-4 d-flex justify-content-centerbuttons search">
-         <button type="submit" class="btn btn-info" id="buscar" (click)="closeModal()">
+         <button class="btn btn-info" (click)="closeModal()">
             Salir
          </button>
       </div>
 
       <div class="form-group row col-4 d-flex justify-content-center buttons search">
-         <button type="submit" class="btn btn-info" id="buscar" (click)="crearContrato()">
+         <button class="btn btn-info" (click)="crearContrato()" [disabled]="botonDisabled">
             Crear
          </button>
       </div>
    </div>
  
-</form>
+</div>

@@ -50,8 +50,8 @@
                      arr.push(this.insertarDatoVinieta(dato));
                   });
 
-                  datosVinietas.forEach(dato => {
-                     arr.push(this.insertarImagen(arrayImg[0]))
+                  arrayImg.forEach((element: any) => {
+                     arr.push(this.insertarImagen(element.res))
                   });
 
                   return arr;

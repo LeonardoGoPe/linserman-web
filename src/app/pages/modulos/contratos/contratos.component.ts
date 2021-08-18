@@ -10,6 +10,11 @@ import { ModalCrearContratoComponent } from './components/modal-crear-contrato/m
 })
 export class ContratosComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 5;
+
+  nombreContrato: string = ''
+
   arrayContratos: any = []
 
   constructor(
@@ -26,12 +31,14 @@ export class ContratosComponent implements OnInit {
 
   crearContrato() {
     const modalCrearContrato = this.modalService.open(ModalCrearContratoComponent, {
-        size: "md", 
-        windowClass: '' 
+        windowClass: 'modals modalCrearContrato' 
     });
     modalCrearContrato.componentInstance.tipoModal = "remover";
     modalCrearContrato.componentInstance.emitRemoverAfiliado.subscribe((emmitedValue: any) => {
-      
+      this.generalesService.getContratos()?.subscribe((data: any) =>{
+        this.arrayContratos = data.data
+        console.log(data)
+      })
     });
 }
 

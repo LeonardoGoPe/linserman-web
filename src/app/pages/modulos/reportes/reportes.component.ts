@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportesComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 5;
+
   constructor() { }
 
   ngOnInit(): void {

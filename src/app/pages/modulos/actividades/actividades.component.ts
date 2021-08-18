@@ -10,6 +10,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class ActividadesComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 5;
+
   actividadesList: any = []
 
   constructor(

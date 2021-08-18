@@ -8,6 +8,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class PersonalComponent implements OnInit {
 
+  page: number = 1;
+  itemsPerPage: number = 5;
+
   listaPersonal: any = []
 
   constructor(
