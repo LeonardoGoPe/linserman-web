@@ -6,7 +6,9 @@ import {
    TabStopPosition,
    TabStopType,
    TextRun,
-   ImageRun
+   ImageRun,
+   TextWrappingType,
+   TextWrappingSide
 } from "docx";
 
 export class PlantillaGeneral {
@@ -149,18 +151,19 @@ export class PlantillaGeneral {
          spacing: {
             before: 220,
          },
-         tabStops: [
-            {
-               type: TabStopType.RIGHT,
-               position: TabStopPosition.MAX
-            }
-         ],
          children: [
             new ImageRun({
                data: img,
                transformation: {
-                  width: 450,
-                  height:450,
+                  width: 200,
+                  height:200,
+               },
+            }),
+            new ImageRun({
+               data: img,
+               transformation: {
+                  width: 200,
+                  height:200,
                },
             })
          ]
