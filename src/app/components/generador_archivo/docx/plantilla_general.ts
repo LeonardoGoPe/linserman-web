@@ -7,13 +7,14 @@ import {
    TabStopType,
    TextRun,
    ImageRun,
-   TextWrappingType,
-   TextWrappingSide
 } from "docx";
 
 export class PlantillaGeneral {
    // tslint:disable-next-line: typedef
    public crearDocumento([arrayImg, contrato, informacion]:any): Document {
+      let contadorImg: number = 0;
+      let listaImg: any = []
+
       const document = new Document({
          sections: [
             {
@@ -52,9 +53,16 @@ export class PlantillaGeneral {
                   });
 
                   arrayImg.forEach((element: any) => {
-                     arr.push(this.insertarImagen(element.res))
+                     listaImg.push(element.res)
+                     if(listaImg.length == 2){
+                        arr.push(this.insertarDosImagen(listaImg))
+                        listaImg = []
+                     }
                   });
-
+                  if(listaImg.length != 0){
+                     arr.push(this.insertarUnaImagen(listaImg))
+                     listaImg = []
+                  }
                   return arr;
                   }).reduce((prev:any, curr:any) => prev.concat(curr), []),
             ]
@@ -145,27 +153,51 @@ export class PlantillaGeneral {
       });
    }
 
-   public insertarImagen(img: any): Paragraph{
+   public insertarDosImagen(img: any): Paragraph{
       return new Paragraph({
          alignment: AlignmentType.CENTER,
          spacing: {
-            before: 220,
+            before:250,
          },
          children: [
             new ImageRun({
-               data: img,
+               data: img[0],
                transformation: {
                   width: 200,
                   height:200,
                },
             }),
+            new TextRun({
+               text:"           "
+            }),
             new ImageRun({
-               data: img,
+               data: img[1],
                transformation: {
                   width: 200,
                   height:200,
                },
             })
+         ]
+      });
+   }
+
+   public insertarUnaImagen(img: any): Paragraph{
+      return new Paragraph({
+         alignment: AlignmentType.CENTER,
+         spacing: {
+            before:250,
+         },
+         children: [
+            new ImageRun({
+               data: img[0],
+               transformation: {
+                  width: 200,
+                  height:200,
+               },
+            }),
+            new TextRun({
+               text:"           "
+            }),
          ]
       });
    }
