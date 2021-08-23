@@ -34,6 +34,8 @@ import { CrearActividadComponent } from './pages/modulos/actividades/component/c
 import { EditarActividadComponent } from './pages/modulos/actividades/component/editar-actividad/editar-actividad.component';
 import { CrearContratoComponent } from './pages/modulos/contratos/component/crear-contrato/crear-contrato.component';
 import { EditarContratoComponent } from './pages/modulos/contratos/component/editar-contrato/editar-contrato.component';
+import { ElegirContratoComponent } from './pages/modulos/generacion-reportes/component/elegir-contrato/elegir-contrato.component';
+import { ElegirNombreComponent } from './pages/modulos/generacion-reportes/component/elegir-nombre/elegir-nombre.component';
 
 
 @NgModule({
@@ -59,6 +61,8 @@ import { EditarContratoComponent } from './pages/modulos/contratos/component/edi
     EditarActividadComponent,
     CrearContratoComponent,
     EditarContratoComponent,
+    ElegirContratoComponent,
+    ElegirNombreComponent,
   ],
   imports: [
     BrowserModule,

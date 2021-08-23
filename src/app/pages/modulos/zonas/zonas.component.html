@@ -33,8 +33,7 @@
                       <tr>
                         <th scope="col">Código de sector</th>
                         <th class="nameCliente" scope="col">Ciudad</th>
-                        <th scope="col">Nombre del sector</th>
-                        <th scope="col">Punto cardinal</th>
+                        <th scope="col">Zona de la ciudad</th>
                         <th scope="col">Acciones</th>
                       </tr>
                     </thead>
@@ -42,19 +41,25 @@
                       <tr *ngFor="let sectores of sectoresList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                         <td>{{sectores.id_sector}}</td>
                         <td>{{sectores.ciudad}}</td>
-                        <td>{{sectores.sector}}</td>
-                        <td>{{sectores.punto_cardinal}}</td>
+                        <td>{{sectores.zona_ciudad}}</td>
                         <td class="accions">
-                           <img alt="search" src="assets/editar.svg">
-                           <img alt="search" src="assets/eliminar.svg">
+                           <img alt="search" src="assets/editar.svg" (click)="editarZona(sectores.id_sector)">
                         </td>
                       </tr>
                       
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex flex-row-reverse mt-4">
-                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            <div class="row col-12">
+               <div class="form-group col-6 buttons search">
+                  <button type="submit" class="btn btn-info" (click)="crearZona()" id="buscar">
+                     Nueva Zona
+                  </button>
+               </div>
+               
+               <div class="form-group col-6 d-flex flex-row-reverse">
+                  <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+               </div>
             </div>
         </div>
     </div>

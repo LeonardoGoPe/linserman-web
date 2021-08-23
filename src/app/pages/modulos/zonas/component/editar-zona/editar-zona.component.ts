@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralesService } from 'src/app/services/generales.service';
 
 @Component({
   selector: 'app-editar-zona',
@@ -7,9 +9,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditarZonaComponent implements OnInit {
 
-  constructor() { }
+  mostrarMensaje: boolean = false;
+  mensaje: any;
+  codigoRespuestaHttp: any;
+
+  formulario: any ; 
+
+  @Input() zona: any;
+  @Output() zonaElegida: EventEmitter<any> = new EventEmitter();
+
+  zonaData: any = {};
+
+  constructor(
+    private modalService: NgbModal,
+    private generalService: GeneralesService
+  ) { }
 
   ngOnInit(): void {
+    this.generalService.getZona(this.zona)?.subscribe((data: any) =>{
+      this.zonaData = data.data
+      console.log(data)
+    })
+  }
+
+  closeModal(){
+    this.modalService.dismissAll();
+  }
+
+  actualizarZona(){
+
+    this.generalService.putZona(this.zona,this.zonaData)?.subscribe((data: any) =>{
+      console.log(data)
+      this.zonaElegida.emit(true)
+      this.closeModal();
+    })
+  }
+
+
+  accionMostrarMensaje(mensaje:string,codigo:number){
+    this.mensaje = mensaje;
+    this.codigoRespuestaHttp = codigo;
+    this.mostrarMensaje = true;
+    setTimeout(() => {
+      this.mostrarMensaje = false;
+    }, 500);
   }
 
 }
+
