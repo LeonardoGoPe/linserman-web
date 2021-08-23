@@ -16,7 +16,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertaComponent } from './components/alerta/alerta.component';
-import { ModalCrearContratoComponent } from './pages/modulos/contratos/components/modal-crear-contrato/modal-crear-contrato.component';
 import { HttpClientModule } from '@angular/common/http';    // add this
 import { UsuariosService } from './services/usuarios.service';    // add this
 
@@ -24,9 +23,17 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
-import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NombrecontratoPipe } from './pipes/nombrecontrato.pipe';
+import { ZonasComponent } from './pages/modulos/zonas/zonas.component';
+import { EditarZonaComponent } from './pages/modulos/zonas/component/editar-zona/editar-zona.component';
+import { CrearZonaComponent } from './pages/modulos/zonas/component/crear-zona/crear-zona.component';
+import { CrearPersonalComponent } from './pages/modulos/personal/component/crear-personal/crear-personal.component';
+import { EditarPersonalComponent } from './pages/modulos/personal/component/editar-personal/editar-personal.component';
+import { CrearActividadComponent } from './pages/modulos/actividades/component/crear-actividad/crear-actividad.component';
+import { EditarActividadComponent } from './pages/modulos/actividades/component/editar-actividad/editar-actividad.component';
+import { CrearContratoComponent } from './pages/modulos/contratos/component/crear-contrato/crear-contrato.component';
+import { EditarContratoComponent } from './pages/modulos/contratos/component/editar-contrato/editar-contrato.component';
 
 
 @NgModule({
@@ -42,9 +49,16 @@ import { NombrecontratoPipe } from './pipes/nombrecontrato.pipe';
     GeneracionReportesComponent,
     InformacionComponent,
     AlertaComponent,
-    ModalCrearContratoComponent,
-    SectoresComponent,
     NombrecontratoPipe,
+    ZonasComponent,
+    EditarZonaComponent,
+    CrearZonaComponent,
+    CrearPersonalComponent,
+    EditarPersonalComponent,
+    CrearActividadComponent,
+    EditarActividadComponent,
+    CrearContratoComponent,
+    EditarContratoComponent,
   ],
   imports: [
     BrowserModule,

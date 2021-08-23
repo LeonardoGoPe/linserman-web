@@ -47,16 +47,23 @@
                            <span *ngIf="personal.tipo_usuario==3" >Administrador</span>
                         </td>
                         <td class="accions">
-                           <img alt="search" src="assets/editar.svg">
-                           <img alt="search" src="assets/eliminar.svg">
+                           <img alt="search" src="assets/editar.svg" (click)="editarUsuario(personal.id)">
                         </td>
                       </tr>
                       
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex flex-row-reverse mt-4">
-                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            <div class="row col-12">
+               <div class="form-group col-6 buttons search">
+                  <button type="submit" class="btn btn-info" (click)="crearUsuario()" id="buscar">
+                     Nuevo Usuario
+                  </button>
+               </div>
+               
+               <div class="form-group col-6 d-flex flex-row-reverse">
+                  <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+               </div>
             </div>
         </div>
     </div>

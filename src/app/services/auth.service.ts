@@ -11,8 +11,8 @@ export class AuthService {
   public user = new BehaviorSubject<any>(null);
   private token: any;
 
-  //URL_API = 'http://127.0.0.1:8000/api/'
-  URL_API = 'http://linserman.pythonanywhere.com/api/'
+  URL_API = 'http://127.0.0.1:8000/api/'
+  //URL_API = 'http://linserman.pythonanywhere.com/api/'
 
   isLogged = false
   constructor(

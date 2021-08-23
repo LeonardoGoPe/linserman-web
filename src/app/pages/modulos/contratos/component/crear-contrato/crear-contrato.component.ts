@@ -1,16 +1,14 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralesService } from 'src/app/services/generales.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-modal-crear-contrato',
-  templateUrl: './modal-crear-contrato.component.html',
-  styleUrls: ['./modal-crear-contrato.component.scss']
+  selector: 'app-crear-contrato',
+  templateUrl: './crear-contrato.component.html',
+  styleUrls: ['./crear-contrato.component.scss']
 })
-export class ModalCrearContratoComponent implements OnInit {
+export class CrearContratoComponent implements OnInit {
 
   UbicacionList: any = []
   ActividadesList: any = []
@@ -47,7 +45,7 @@ export class ModalCrearContratoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.generalesService.getSectores()?.subscribe((data: any) =>{
+    this.generalesService.getZonas()?.subscribe((data: any) =>{
       this.UbicacionList = data.data
       console.log(data)
     })

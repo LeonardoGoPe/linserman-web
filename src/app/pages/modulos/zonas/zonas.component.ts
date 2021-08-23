@@ -4,11 +4,11 @@ import { GeneralesService } from 'src/app/services/generales.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
-  selector: 'app-sectores',
-  templateUrl: './sectores.component.html',
-  styleUrls: ['./sectores.component.scss']
+  selector: 'app-zonas',
+  templateUrl: './zonas.component.html',
+  styleUrls: ['./zonas.component.scss']
 })
-export class SectoresComponent implements OnInit {
+export class ZonasComponent implements OnInit {
 
   page: number = 1;
   itemsPerPage: number = 5;
@@ -22,7 +22,7 @@ export class SectoresComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.generalesService.getSectores()?.subscribe((data: any) =>{
+    this.generalesService.getZonas()?.subscribe((data: any) =>{
       this.sectoresList = data.data
       console.log(data)
     })

@@ -17,10 +17,33 @@ export class UsuariosService {
     );
   }
 
+  getUsuario(id: any) {
+    return this.apiService.ApiCall(
+      `usuarios/${id}`,
+      "GET",
+    );
+  }
+
   getUsuariosPorRol(tipo_usuario: any) {
     return this.apiService.ApiCall(
       `usuarios/?tipo_usuario=${tipo_usuario}`,
       "GET",
+    );
+  }
+
+  postUsuario(data: any){
+    return this.apiService.ApiCall(
+      `usuarios/`,
+      "POST",
+      data
+    );
+  }
+
+  putUsuario(id: any, data: any){
+    return this.apiService.ApiCall(
+      `usuarios/${id}`,
+      "PUT",
+      data
     );
   }
 

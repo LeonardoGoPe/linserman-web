@@ -10,7 +10,7 @@ export class GeneralesService {
     private apiService: ApiService
   ) { }
 
-  getSectores() {
+  getZonas() {
     return this.apiService.ApiCall(
       `sectores/`,
       "GET",

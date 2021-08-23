@@ -7,7 +7,7 @@ import { GeneracionReportesComponent } from './pages/modulos/generacion-reportes
 import { InformacionComponent } from './pages/modulos/informacion/informacion.component';
 import { PersonalComponent } from './pages/modulos/personal/personal.component';
 import { ReportesComponent } from './pages/modulos/reportes/reportes.component';
-import { SectoresComponent } from './pages/modulos/sectores/sectores.component';
+import { ZonasComponent } from './pages/modulos/zonas/zonas.component';
 
 const routes: Routes = [
   { 
@@ -23,7 +23,7 @@ const routes: Routes = [
    },
 
   { 
-    path: 'sectores', component:SectoresComponent 
+    path: 'zonas-referenciales', component:ZonasComponent
   },
 
   { 

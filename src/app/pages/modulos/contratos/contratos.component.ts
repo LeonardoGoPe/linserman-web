@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralesService } from 'src/app/services/generales.service';
-import { ModalCrearContratoComponent } from './components/modal-crear-contrato/modal-crear-contrato.component';
+import { CrearContratoComponent } from './component/crear-contrato/crear-contrato.component';
 
 @Component({
   selector: 'app-contratos',
@@ -30,7 +30,7 @@ export class ContratosComponent implements OnInit {
   }
 
   crearContrato() {
-    const modalCrearContrato = this.modalService.open(ModalCrearContratoComponent, {
+    const modalCrearContrato = this.modalService.open(CrearContratoComponent, {
         windowClass: 'modals modalCrearContrato' 
     });
     modalCrearContrato.componentInstance.tipoModal = "remover";
