@@ -8,21 +8,36 @@
                 <div class="row">
                     <form id="formaSearchClientes" class="formSearch"> 
                         <div class="row">
-                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-3 col-xl-3 my-input">
-                                <label for="">Autor</label>
-                                    <input name="identificacionSearch">
+                            <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Contrato</label>
+                                <input 
+                                    class="form-group col-12" 
+                                    name="identificacionSearch"
+                                    (click)="buscarContrato()"
+                                    [(ngModel)]="contratoElegido"
+                                    >
                             </div>
-                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input">
-                                <label for="">Contrato</label>
-                                <input name="clienteSearch">
+
+                            <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Sector</label>
+                                <select class="row col-12" name="sector" [(ngModel)]="idSectorElegido" (ngModelChange)="actualizarActividades($event)">
+                                    <option [ngValue]="c.id" *ngFor="let c of arraySectores">
+                                        {{c.nombre_sector}}
+                                    </option>
+                                </select>
                             </div> 
-                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input">
-                                <label for="">Actividad</label>
-                                <input name="clienteSearch">
+
+                            <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Actividad</label>
+                                <select class="row col-12" name="actividad" [(ngModel)]="idActividadElegida" (ngModelChange)="actualizarActividades($event)">
+                                    <option [ngValue]="c.id_actividad" *ngFor="let c of arrayActividades">
+                                        {{c.texto_descripcion}}
+                                    </option>
+                                </select>
                             </div>                          
 
-                            <div class="form-group col-12 col-sm-4 col-md-3 col-lg-4 col-xl-2 buttons search">
-                                <button type="submit" class="btn success-button btn-searchs" id="buscar"
+                            <div class="form-group col-2 buttons search mt-3">
+                                <button type="submit" class="btn success-button btn-searchs mt-1" id="buscar" (click)="buscarImagenes()"
                                     >Buscar
                                 </button>
                             </div>

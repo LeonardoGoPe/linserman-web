@@ -79,10 +79,17 @@ export class GeneralesService {
   /*------------------------------------------------*/
 
   
-
+ /*---------------Contratos----------------------------*/
   getContratos(){
     return this.apiService.ApiCall(
       `contratos/`,
+      "GET",
+    );
+  }
+
+  getContrato(id: any){
+    return this.apiService.ApiCall(
+      `contratos/${id}`,
       "GET",
     );
   }
@@ -94,4 +101,6 @@ export class GeneralesService {
       data
     );
   }
+
+  /*-------------------------------------------*/
 }

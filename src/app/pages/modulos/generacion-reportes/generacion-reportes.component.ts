@@ -11,6 +11,8 @@ import { map } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ElegirContratoComponent } from './component/elegir-contrato/elegir-contrato.component';
 
 @Component({
   selector: 'app-generacion-reportes',
@@ -29,12 +31,22 @@ export class GeneracionReportesComponent implements OnInit {
   arrayImages: any = []
   cloudFiles:any=[]
 
+  arraySectores: any = []
+  arrayActividades: any = []
+
+  contratoElegido: any;
+  idContratoElegido: any;
+
+  idSectorElegido: any;
+  idActividadElegida: any;
+
 
   constructor(
     private usuariosService: UsuariosService,
     private firebaseService: FirebaseService,
     public http: HttpClient,
-    private fStorage: AngularFireStorage
+    private fStorage: AngularFireStorage,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +55,7 @@ export class GeneracionReportesComponent implements OnInit {
     this.arrayExample.push({"id":3,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":4,"descripcion":"algo","add":false})
 
-    this.getAllImages();
+    //this.getAllImages();
 
     /*this.http.get('./assets/img-example.jpg', { responseType: 'blob' }).subscribe(res => {
       const reader = new FileReader();
@@ -73,6 +85,51 @@ export class GeneracionReportesComponent implements OnInit {
     }, err =>{
       console.log(err)
     })
+  }
+
+  buscarContrato(){
+    const modalBuscarContrato = this.modalService.open(ElegirContratoComponent, {
+      windowClass: 'modals modalGenerales' 
+    });
+    modalBuscarContrato.componentInstance.contratoElegido.subscribe((contrato: any) => {
+      if(contrato != null){
+        this.contratoElegido = contrato.nombre_contrato
+        this.idContratoElegido = contrato.id;
+        console.log(this.idContratoElegido)
+        this.arraySectores = contrato.sectores
+      }
+    });
+  }
+
+  actualizarActividades(event: any){
+
+    console.log(this.idSectorElegido)
+    let sectorData = this.arraySectores.find((element: any) => this.idSectorElegido == element.id )
+    console.log(sectorData)
+
+    this.arrayActividades = sectorData.actividades
+  }
+
+  buscarImagenes(){
+    let id: number = 0;
+    console.log(this.idContratoElegido)
+    console.log(this.idSectorElegido)
+    console.log(this.idActividadElegida)
+    this.fStorage.ref(`contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
+      console.log(res);
+      res.items.forEach(element => {
+        element.getMetadata().then(data=>  {
+          let metaData: any = {}
+          metaData.datos = data.customMetadata
+            element.getDownloadURL().then(url=>  {
+              console.log(url)
+              //this.arrayImages.push(url)
+              this.cloudFiles.push({id:id,url:url,add:false,datos:metaData})
+              id++;
+            })
+          })
+        })
+      });
   }
 
   getAllImages(){

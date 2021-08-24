@@ -1,1 +1,41 @@
-<p>elegir-contrato works!</p>
+<app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
+<div>
+
+
+   <div class="row d-flex justify-content-center mt-4">
+         <label><b class="row d-flex justify-content-center contrato col-12">Contratos</b></label>
+   </div>
+
+
+   <div class="tableContent mx-5">
+      <table class="table">
+         <thead>
+            <tr>
+            <th class="nameCliente" scope="col">Nombre del contrato</th>
+            <th scope="col">Descripción del contrato</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let contrato of listContratos | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+               <td (dblclick)="contratoFunc(contrato)">{{contrato.nombre_contrato}}</td>
+               <td (dblclick)="contratoFunc(contrato)">{{contrato.descripcion}}</td>
+            </tr>
+            
+         </tbody>
+      </table>
+   </div>
+   <div class="row col-12 d-flex justify-content-end mt-4">
+      <div class="form-group col-6">
+         <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </div>
+   </div>
+
+   <div class="row col-12 d-flex justify-content-around my-4">
+      <div class="form-group row col-4 d-flex justify-content-centerbuttons search">
+         <button class="btn btn-info" (click)="closeModal()">
+            Salir
+         </button>
+      </div>
+   </div>
+ 
+</div>
