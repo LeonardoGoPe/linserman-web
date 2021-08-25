@@ -115,7 +115,10 @@ export class GeneracionReportesComponent implements OnInit {
     console.log(this.idContratoElegido)
     console.log(this.idSectorElegido)
     console.log(this.idActividadElegida)
+    this.cloudFiles = []
+    this.cargando = true;
     this.fStorage.ref(`contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
+      this.cargando = false;
       console.log(res);
       res.items.forEach(element => {
         element.getMetadata().then(data=>  {

@@ -31,13 +31,18 @@
    </div>
 
    <div class="row d-flex justify-content-center mt-3">
+         <label class="row col-5" for="firstname">Empresa</label>
+         <input class="row col-5" type="text" [(ngModel)]="usuarioData.empresa">
+   </div>
+
+   <div class="row d-flex justify-content-center mt-3">
          <label class="row col-5" for="firstname">Usuario Habilitado</label>
          <input class="row col-5" type="checkbox" [(ngModel)]="usuarioData.is_active">
    </div>
 
    <div class="row d-flex justify-content-center mt-3">
          <label class="row col-5" for="firstname">Tipo Usuario</label>
-         <select class="row seleccion-multiple col-5" [(ngModel)]="usuarioData.tipo_usuario">
+         <select class="row col-5" [(ngModel)]="usuarioData.tipo_usuario">
          <option [ngValue]="c.id" *ngFor="let c of arrayTiposUsuarios">
             {{c.descripcion}}
          </option>
