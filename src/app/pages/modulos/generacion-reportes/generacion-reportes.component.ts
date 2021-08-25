@@ -40,6 +40,8 @@ export class GeneracionReportesComponent implements OnInit {
   idSectorElegido: any;
   idActividadElegida: any;
 
+  fechaInicial: any;
+  fechaFinal: any;
 
   constructor(
     private usuariosService: UsuariosService,
@@ -112,6 +114,7 @@ export class GeneracionReportesComponent implements OnInit {
 
   buscarImagenes(){
     let id: number = 0;
+    //let count: number = 0
     console.log(this.idContratoElegido)
     console.log(this.idSectorElegido)
     console.log(this.idActividadElegida)
@@ -123,7 +126,10 @@ export class GeneracionReportesComponent implements OnInit {
       res.items.forEach(element => {
         element.getMetadata().then(data=>  {
           let metaData: any = {}
-          metaData.datos = data.customMetadata
+          //console.log(count)
+          //data.customMetadata.fechaFoto = "0"+count+"-08-2021"
+          //count++;
+          metaData = data.customMetadata
             element.getDownloadURL().then(url=>  {
               console.log(url)
               //this.arrayImages.push(url)
@@ -135,24 +141,15 @@ export class GeneracionReportesComponent implements OnInit {
       });
   }
 
-  getAllImages(){
-    console.log("de firebase")
-    let id: number = 0;
-    this.fStorage.ref(`contratos/pruebas`).listAll().subscribe((res)=>{
-      console.log(res);
-      res.items.forEach(element => {
-        element.getMetadata().then(data=>  {
-          let metaData: any = {}
-          metaData.datos = data.customMetadata
-            element.getDownloadURL().then(url=>  {
-              console.log(url)
-              //this.arrayImages.push(url)
-              this.cloudFiles.push({id:id,url:url,add:false,datos:metaData})
-              id++;
-            })
-          })
-        })
-      });
+  filtrarPorFechas(){
+    console.log(this.cloudFiles)
+    let startDate = "2021-08-18";
+    let endDate = "2021-08-29";
+
+
+    this.cloudFiles = this.cloudFiles.filter(
+      (element: any) => new Date(element.datos.fecha) >= new Date(this.fechaInicial) && new Date(element.datos.fecha) <= new Date(this.fechaFinal)
+      );
   }
   
   agregarItem(item: any){

@@ -42,6 +42,34 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Fecha inicial</label>
+                                <input 
+                                    type="text" 
+                                    mwlFlatpickr 
+                                    name="actividad"
+                                    [(ngModel)]="fechaInicial" 
+                                    [altInput]="true" 
+                                    [convertModelValue]="true">
+                            </div>
+                            <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Fecha final</label>
+                                <input
+                                    class="form-control calendario w-100 px-2"
+                                    type="text"
+                                    style="height:2.5rem;"
+                                    mwlFlatpickr
+                                    [(ngModel)]="fechaFinal"
+                                    dateFormat="d/m/Y"
+                                    readonly>
+                            </div>
+                            <div class="form-group col-2 buttons search mt-3">
+                                <button type="submit" class="btn success-button btn-searchs mt-1" id="buscar" (click)="filtrarPorFechas()"
+                                    >Buscar
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -50,7 +78,12 @@
                    <img class="card-img-top"  [src]="item.url" width="267" height="500" alt="Card image cap">
                    <div class="card-body">
                       <h5 class="card-title">Imagen ejemplo</h5>
-                      <p class="card-text"></p>
+                      <p class="card-text">
+                        Autor: {{item.datos.usuario}}
+                      </p>
+                      <p class="card-text">
+                        Fecha de la foto: {{item.datos.fecha}}
+                      </p>
                       <button 
                          *ngIf="!item.add" 
                          class="btn btn-primary"

@@ -36,7 +36,9 @@ import { CrearContratoComponent } from './pages/modulos/contratos/component/crea
 import { EditarContratoComponent } from './pages/modulos/contratos/component/editar-contrato/editar-contrato.component';
 import { ElegirContratoComponent } from './pages/modulos/generacion-reportes/component/elegir-contrato/elegir-contrato.component';
 import { ElegirNombreComponent } from './pages/modulos/generacion-reportes/component/elegir-nombre/elegir-nombre.component';
-
+import "flatpickr/dist/flatpickr.css"; // you may need to adjust the css import depending on your build tool
+import { FlatpickrModule } from "angularx-flatpickr";
+import flatpickr from "flatpickr";
 
 @NgModule({
   declarations: [
@@ -77,7 +79,8 @@ import { ElegirNombreComponent } from './pages/modulos/generacion-reportes/compo
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FlatpickrModule.forRoot()
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [UsuariosService],
