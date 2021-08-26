@@ -11,13 +11,12 @@ import {
 
 export class PlantillaGeneral {
    // tslint:disable-next-line: typedef
-   public crearDocumento([arrayImg, contrato, informacion]:any): Document {
+   public crearDocumento([contratoFinal, informacion]:any): Document {
       let contadorImg: number = 0;
       let listaImg: any = []
 
       const document = new Document({
-         sections: [
-            {
+         sections: [{
             children: [
                /*Titulo documento*/
                new Paragraph({
@@ -29,47 +28,42 @@ export class PlantillaGeneral {
                this.crearDetallesEmpresa(informacion.celular, informacion.contacto, informacion.correoElectronico, informacion.direccion),
 
                /*Cabecera*/
-               this.crearCabecera("Nombre del reporte ejemplo"),
+               this.crearCabecera(contratoFinal.nombre),
 
-               ...contrato
-                  .map((dataContrato:any) => {
-                  const arr: Paragraph[] = [];
-                  arr.push(
-                     this.crearNombreActividad(
-                        dataContrato.actividad,
-                     )
-                  );
-                  arr.push(
-                     this.crearAutorImagen(
-                        dataContrato.autor
-                     )
-                  );
+               ...contratoFinal.sectores
+                  .map((sector:any) => {
+                     const arr: Paragraph[] = [];
+                     arr.push(
+                        this.crearSubCabecera(
+                           sector.nombre,
+                        )
+                     );
 
-                  const datosVinietas = this.separadorVinieta(
-                     dataContrato.detalles
-                  );
-                  datosVinietas.forEach(dato => {
-                     arr.push(this.insertarDatoVinieta(dato));
-                  });
-
-                  arrayImg.forEach((element: any) => {
-                     listaImg.push(element.res)
-                     if(listaImg.length == 2){
-                        arr.push(this.insertarDosImagen(listaImg))
-                        listaImg = []
-                     }
-                  });
-                  if(listaImg.length != 0){
-                     arr.push(this.insertarUnaImagen(listaImg))
-                     listaImg = []
-                  }
-                  return arr;
+                     sector.actividades.forEach((actividad:any) => {
+                        arr.push(
+                           this.crearNombreActividad(
+                              actividad.nombre,
+                           )
+                        );
+                        actividad.imagenes.forEach((imagen: any) => {
+                           listaImg.push(imagen.res)
+                           if(listaImg.length == 2){
+                              console.log(listaImg)
+                              arr.push(this.insertarDosImagen(listaImg))
+                              listaImg = []
+                           }
+                        })
+                        
+                        if(listaImg.length != 0){
+                           arr.push(this.insertarUnaImagen(listaImg))
+                           listaImg = []
+                        }
+                     });
+                     return arr;
                   }).reduce((prev:any, curr:any) => prev.concat(curr), []),
             ]
-            }
-         ]
+         }]
       });
-
       return document;
    }
 

@@ -6,7 +6,6 @@ import { Packer } from "docx";
 import { informacion, contrato, experiences, education, skills, achievements } from "src/app/components/generador_archivo/docx/cv";
 import { PlantillaContrato } from "src/app/components/generador_archivo/docx/plantilla_contrato";
 import { PlantillaGeneral } from "src/app/components/generador_archivo/docx/plantilla_general";
-import { map } from 'rxjs/operators';
 
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
@@ -42,6 +41,8 @@ export class GeneracionReportesComponent implements OnInit {
 
   fechaInicial: any;
   fechaFinal: any;
+
+  contratoFinal: any = {};
 
   constructor(
     private usuariosService: UsuariosService,
@@ -95,6 +96,28 @@ export class GeneracionReportesComponent implements OnInit {
     });
     modalBuscarContrato.componentInstance.contratoElegido.subscribe((contrato: any) => {
       if(contrato != null){
+        console.log(contrato)
+
+        this.contratoFinal.nombre = contrato.nombre_contrato
+        this.contratoFinal.sectores = []
+
+        contrato.sectores.forEach((element: any) => {
+          let sectorData: any = {}
+          sectorData.nombre = element.nombre_sector
+          sectorData.id = element.id
+          sectorData.actividades = []
+
+          element.actividades.forEach((element: any) => {
+            let actividadData: any = {}
+            actividadData.nombre = element.texto_descripcion
+            actividadData.id = element.id_actividad
+            actividadData.imagenes = []
+            sectorData.actividades.push(actividadData)
+          });
+          this.contratoFinal.sectores.push(sectorData)
+        });
+
+
         this.contratoElegido = contrato.nombre_contrato
         this.idContratoElegido = contrato.id;
         console.log(this.idContratoElegido)
@@ -114,26 +137,32 @@ export class GeneracionReportesComponent implements OnInit {
 
   buscarImagenes(){
     let id: number = 0;
-    //let count: number = 0
     console.log(this.idContratoElegido)
     console.log(this.idSectorElegido)
     console.log(this.idActividadElegida)
     this.cloudFiles = []
     this.cargando = true;
+
+    console.log(this.contratoFinal)
+
+
     this.fStorage.ref(`contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
       this.cargando = false;
       console.log(res);
       res.items.forEach(element => {
         element.getMetadata().then(data=>  {
           let metaData: any = {}
-          //console.log(count)
-          //data.customMetadata.fechaFoto = "0"+count+"-08-2021"
-          //count++;
           metaData = data.customMetadata
             element.getDownloadURL().then(url=>  {
-              console.log(url)
+              //console.log(url)
               //this.arrayImages.push(url)
-              this.cloudFiles.push({id:id,url:url,add:false,datos:metaData})
+              this.cloudFiles.push({
+                id:id,
+                url:url,
+                add:false,
+                hidden:false,
+                datos:metaData
+              })
               id++;
             })
           })
@@ -146,10 +175,21 @@ export class GeneracionReportesComponent implements OnInit {
     let startDate = "2021-08-18";
     let endDate = "2021-08-29";
 
+    this.cloudFiles.forEach((element: any)  => {
+      if(!(new Date(element.datos.fecha) >= new Date(this.fechaInicial) && new Date(element.datos.fecha) <= new Date(this.fechaFinal))){
+        element.hidden = true
+      }
+    })
 
-    this.cloudFiles = this.cloudFiles.filter(
-      (element: any) => new Date(element.datos.fecha) >= new Date(this.fechaInicial) && new Date(element.datos.fecha) <= new Date(this.fechaFinal)
-      );
+  }
+
+  limpiarFechas(){
+    this.fechaInicial = null
+    this.fechaFinal = null
+    
+    this.cloudFiles.forEach((element: any)  => {
+      element.hidden = false
+    })
   }
   
   agregarItem(item: any){
@@ -168,6 +208,19 @@ export class GeneracionReportesComponent implements OnInit {
       this.arrayImages.push({id:item.id,res:res})
       console.log(this.arrayImages)
 
+        this.contratoFinal.sectores.forEach((element: any) => {
+          console.log("ENTRAAAA",element)
+          if(element.id == this.idSectorElegido){
+            element.actividades.forEach((element: any) => {
+              if(element.id == this.idActividadElegida){
+                console.log("ENTRAAAA")
+                element.imagenes.push({id:item.id,res:res})
+              }
+            });
+          }
+      });
+
+
       /*let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
       this.arrayImages[index].add = true;
       console.log(this.arrayImages)*/
@@ -183,11 +236,10 @@ export class GeneracionReportesComponent implements OnInit {
   }
 
   public descargaPlantillaGeneral(): void{
-    //console.log(this.arrayImages)
+    console.log(this.contratoFinal)
     const generarPlantillaGeneral = new PlantillaGeneral();
     const documento = generarPlantillaGeneral.crearDocumento([
-      this.arrayImages,
-      contrato,
+      this.contratoFinal,
       informacion
     ]);
 
@@ -200,6 +252,10 @@ export class GeneracionReportesComponent implements OnInit {
 
   public descargaPlantillaContrato(): void{
     const generarPlantillaContrato = new PlantillaContrato();
+
+
+
+    
     const documento = generarPlantillaContrato.crearDocumento([
       this.arrayImages,
       contrato,
