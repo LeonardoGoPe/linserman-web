@@ -22,7 +22,7 @@ import { UsuariosService } from './services/usuarios.service';    // add this
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NombrecontratoPipe } from './pipes/nombrecontrato.pipe';
 import { ZonasComponent } from './pages/modulos/zonas/zonas.component';
@@ -38,7 +38,9 @@ import { ElegirContratoComponent } from './pages/modulos/generacion-reportes/com
 import { ElegirNombreComponent } from './pages/modulos/generacion-reportes/component/elegir-nombre/elegir-nombre.component';
 import "flatpickr/dist/flatpickr.css"; // you may need to adjust the css import depending on your build tool
 import { FlatpickrModule } from "angularx-flatpickr";
-import flatpickr from "flatpickr";
+import { EmpresaComponent } from './pages/modulos/empresa/empresa.component';
+import { CrearEmpresaComponent } from './pages/modulos/empresa/component/crear-empresa/crear-empresa.component';
+import { EditarEmpresaComponent } from './pages/modulos/empresa/component/editar-empresa/editar-empresa.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,9 @@ import flatpickr from "flatpickr";
     EditarContratoComponent,
     ElegirContratoComponent,
     ElegirNombreComponent,
+    EmpresaComponent,
+    CrearEmpresaComponent,
+    EditarEmpresaComponent,
   ],
   imports: [
     BrowserModule,

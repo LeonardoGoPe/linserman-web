@@ -33,32 +33,36 @@ export class PlantillaGeneral {
                ...contratoFinal.sectores
                   .map((sector:any) => {
                      const arr: Paragraph[] = [];
-                     arr.push(
-                        this.crearSubCabecera(
-                           sector.nombre,
-                        )
-                     );
-
-                     sector.actividades.forEach((actividad:any) => {
+                     if(sector.cantidadImagenes > 0){
                         arr.push(
-                           this.crearNombreActividad(
-                              actividad.nombre,
+                           this.crearSubCabecera(
+                              sector.nombre,
                            )
                         );
-                        actividad.imagenes.forEach((imagen: any) => {
-                           listaImg.push(imagen.res)
-                           if(listaImg.length == 2){
-                              console.log(listaImg)
-                              arr.push(this.insertarDosImagen(listaImg))
-                              listaImg = []
+   
+                        sector.actividades.forEach((actividad:any) => {
+                           if(actividad.imagenes.length > 0){
+                              arr.push(
+                                 this.crearNombreActividad(
+                                    actividad.nombre,
+                                 )
+                              );
+                              actividad.imagenes.forEach((imagen: any) => {
+                                 listaImg.push(imagen.res)
+                                 if(listaImg.length == 2){
+                                    console.log(listaImg)
+                                    arr.push(this.insertarDosImagen(listaImg))
+                                    listaImg = []
+                                 }
+                              })
+                              
+                              if(listaImg.length != 0){
+                                 arr.push(this.insertarUnaImagen(listaImg))
+                                 listaImg = []
+                              }
                            }
-                        })
-                        
-                        if(listaImg.length != 0){
-                           arr.push(this.insertarUnaImagen(listaImg))
-                           listaImg = []
-                        }
-                     });
+                        });
+                     }
                      return arr;
                   }).reduce((prev:any, curr:any) => prev.concat(curr), []),
             ]

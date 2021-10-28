@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralesService } from 'src/app/services/generales.service';
 
@@ -8,6 +8,8 @@ import { GeneralesService } from 'src/app/services/generales.service';
   styleUrls: ['./elegir-contrato.component.scss']
 })
 export class ElegirContratoComponent implements OnInit {
+
+  @Input() empresaElegida: any;
 
   mostrarMensaje: boolean = false;
   mensaje: any;
@@ -26,8 +28,14 @@ export class ElegirContratoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.empresaElegida)
+
     this.generalService.getContratos()?.subscribe((data: any) =>{
-      this.listContratos = data.data
+
+      data.data.forEach((element: any) => {
+        if(element.empresa.id_empresa == this.empresaElegida)
+        this.listContratos.push(element)
+      });
       console.log(this.listContratos)
     })
   }

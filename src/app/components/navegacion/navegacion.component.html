@@ -31,9 +31,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/generacion-reportes" routerLinkActive="active">Generación de reportes</a>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reportes</a>
-        </li>
+        </li>-->
         <li class="nav-item">
           <a class="nav-link" routerLink="/contratos" routerLinkActive="active" >Contratos</a>
         </li>
@@ -47,7 +47,7 @@
           <a class="nav-link"  routerLink="/personal" routerLinkActive="active">Personal</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  routerLink="/informacion" routerLinkActive="active">Información</a>
+          <a class="nav-link"  routerLink="/empresa" routerLinkActive="active">Empresa</a>
         </li>
       </ul>
       <!-- Left links -->
@@ -59,14 +59,13 @@
       <!-- Avatar -->
       <a
         class="dropdown-toggle d-flex align-items-center hidden-arrow"
-        (click)="enrutamiento('generacion-reportes')"
         id="navbarDropdownMenuLink"
         role="button"
         data-mdb-toggle="dropdown"
         aria-expanded="false"
       >
         <img
-          src="https://mdbootstrap.com/img/new/avatars/2.jpg"
+          src="./assets/imagen-perfil.png"
           class="rounded-circle"
           height="25"
           alt=""
@@ -78,13 +77,7 @@
         aria-labelledby="navbarDropdownMenuLink"
       >
         <li>
-          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">My profile</a>
-        </li>
-        <li>
-          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">Settings</a>
-        </li>
-        <li>
-          <a class="dropdown-item" (click)="enrutamiento('generacion-reportes')">Logout</a>
+          <a class="dropdown-item" (click)="cerrarSesion()">Logout</a>
         </li>
       </ul>
     </div>

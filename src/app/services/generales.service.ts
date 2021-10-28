@@ -78,6 +78,39 @@ export class GeneralesService {
 
   /*------------------------------------------------*/
 
+
+    /*----------------Servicios Empresa---------------*/
+    getEmpresas() {
+      return this.apiService.ApiCall(
+        `empresas/`,
+        "GET",
+      );
+    }
+  
+    getEmpresa(id: any) {
+      return this.apiService.ApiCall(
+        `empresas/${id}`,
+        "GET",
+      );
+    }
+  
+    putEmpresa(id: any, data: any){
+      return this.apiService.ApiCall(
+        `empresas/${id}`,
+        "PUT",
+        data
+      );
+    }
+  
+    postEmpresa(data: any){
+      return this.apiService.ApiCall(
+        `empresas/`,
+        "POST",
+        data
+      );
+    }
+  
+    /*------------------------------------------------*/
   
  /*---------------Contratos----------------------------*/
   getContratos(){

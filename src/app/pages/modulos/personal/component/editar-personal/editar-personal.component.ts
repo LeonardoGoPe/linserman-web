@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralesService } from 'src/app/services/generales.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -28,6 +29,8 @@ export class EditarPersonalComponent implements OnInit {
     }
   ]
 
+  arrayEmpresas: any = []
+
   formulario: any ; 
 
   @Input() usuario: any;
@@ -37,13 +40,19 @@ export class EditarPersonalComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private generalService: GeneralesService,
     private usuariosService: UsuariosService
   ) { }
 
   ngOnInit(): void {
     this.usuariosService.getUsuario(this.usuario)?.subscribe((data: any) =>{
       this.usuarioData = data.data
+      this.usuarioData.empresa = data.data.empresa.id_empresa
       console.log(data)
+    })
+
+    this.generalService.getEmpresas()?.subscribe((data: any) =>{
+      this.arrayEmpresas = data.data
     })
   }
 

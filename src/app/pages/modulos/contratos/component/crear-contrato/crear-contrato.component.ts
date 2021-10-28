@@ -16,6 +16,8 @@ export class CrearContratoComponent implements OnInit {
   arrayFiscalizadores: any = []
   arraySupervisores: any = []
 
+  arrayEmpresas: any = []
+
   data: any = {
     sectores: [],
     descripcion: null,
@@ -26,6 +28,7 @@ export class CrearContratoComponent implements OnInit {
 
   nombreContrato: any;
   descripcionContrato: any;
+  codigoEmpresa: any;
 
   sectorIngresado: any;
   zonaReferencial: any;
@@ -44,6 +47,10 @@ export class CrearContratoComponent implements OnInit {
   codigoRespuestaHttp: any;
 
   ngOnInit(): void {
+
+    this.generalesService.getEmpresas()?.subscribe((data: any) =>{
+      this.arrayEmpresas = data.data
+    })
 
     this.generalesService.getZonas()?.subscribe((data: any) =>{
       this.UbicacionList = data.data
@@ -115,6 +122,7 @@ export class CrearContratoComponent implements OnInit {
 
     this.data.nombre_contrato = this.nombreContrato
     this.data.descripcion = this.descripcionContrato
+    this.data.empresa = this.codigoEmpresa
     
     console.log(this.data)
 

@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ElegirContratoComponent } from './component/elegir-contrato/elegir-contrato.component';
+import { GeneralesService } from 'src/app/services/generales.service';
 
 @Component({
   selector: 'app-generacion-reportes',
@@ -44,15 +45,25 @@ export class GeneracionReportesComponent implements OnInit {
 
   contratoFinal: any = {};
 
+  arrayEmpresas: any = []
+  empresaElegida: any;
+
   constructor(
     private usuariosService: UsuariosService,
     private firebaseService: FirebaseService,
     public http: HttpClient,
     private fStorage: AngularFireStorage,
     private modalService: NgbModal,
+    private generalService: GeneralesService
   ) { }
 
   ngOnInit(): void {
+
+    this.generalService.getEmpresas()?.subscribe((data: any) =>{
+      this.arrayEmpresas = data.data
+    })
+
+
     this.arrayExample.push({"id":1,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":2,"descripcion":"algo","add":false})
     this.arrayExample.push({"id":3,"descripcion":"algo","add":false})
@@ -94,15 +105,20 @@ export class GeneracionReportesComponent implements OnInit {
     const modalBuscarContrato = this.modalService.open(ElegirContratoComponent, {
       windowClass: 'modals modalGenerales' 
     });
+    modalBuscarContrato.componentInstance.empresaElegida = this.empresaElegida
     modalBuscarContrato.componentInstance.contratoElegido.subscribe((contrato: any) => {
       if(contrato != null){
         console.log(contrato)
 
+        let empresa = this.arrayEmpresas.find((element: any) => element.id_empresa == this.empresaElegida);
+
         this.contratoFinal.nombre = contrato.nombre_contrato
+        this.contratoFinal.nombreEmpresa = empresa.nombre_empresa
         this.contratoFinal.sectores = []
 
         contrato.sectores.forEach((element: any) => {
           let sectorData: any = {}
+          sectorData.cantidadImagenes = 0
           sectorData.nombre = element.nombre_sector
           sectorData.id = element.id
           sectorData.actividades = []
@@ -116,7 +132,6 @@ export class GeneracionReportesComponent implements OnInit {
           });
           this.contratoFinal.sectores.push(sectorData)
         });
-
 
         this.contratoElegido = contrato.nombre_contrato
         this.idContratoElegido = contrato.id;
@@ -146,24 +161,51 @@ export class GeneracionReportesComponent implements OnInit {
     console.log(this.contratoFinal)
 
 
-    this.fStorage.ref(`contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
+    this.fStorage.ref(`Limpiaseguro/contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
       this.cargando = false;
       console.log(res);
       res.items.forEach(element => {
         element.getMetadata().then(data=>  {
           let metaData: any = {}
+          console.log(data);
           metaData = data.customMetadata
             element.getDownloadURL().then(url=>  {
+
+
+              let add: boolean = false;
+              let index = this.arrayImages.findIndex((element: any) => element.id == metaData.idFoto )
+              if(index !== -1){
+                add = true
+              }
+
+              /*this.contratoFinal.sectores.forEach((sector: any) => {
+                console.log("ENTRAAAA",sector)
+                if(sector.id == this.idSectorElegido){
+                  sector.actividades.forEach((actividad: any) => {
+                    if(actividad.id == this.idActividadElegida){
+                      console.log("ENTRAAAA",actividad.imagenes)
+                      actividad.imagenes.forEach((imagen: any) => {
+                        if(imagen.id == id ){
+
+                        }
+                      });
+                    }
+                  });
+      
+                  sector.cantidadImagenes = sector.cantidadImagenes + 1;
+                }
+              });*/
+
               //console.log(url)
               //this.arrayImages.push(url)
               this.cloudFiles.push({
-                id:id,
+                id:metaData.idFoto,
                 url:url,
-                add:false,
+                add:add,
                 hidden:false,
                 datos:metaData
               })
-              id++;
+              console.log(this.cloudFiles)
             })
           })
         })
@@ -208,27 +250,45 @@ export class GeneracionReportesComponent implements OnInit {
       this.arrayImages.push({id:item.id,res:res})
       console.log(this.arrayImages)
 
-        this.contratoFinal.sectores.forEach((element: any) => {
-          console.log("ENTRAAAA",element)
-          if(element.id == this.idSectorElegido){
-            element.actividades.forEach((element: any) => {
-              if(element.id == this.idActividadElegida){
+        this.contratoFinal.sectores.forEach((sector: any) => {
+          console.log("ENTRAAAA",sector)
+          if(sector.id == this.idSectorElegido){
+            sector.actividades.forEach((actividad: any) => {
+              if(actividad.id == this.idActividadElegida){
                 console.log("ENTRAAAA")
-                element.imagenes.push({id:item.id,res:res})
+                actividad.imagenes.push({id:item.idFoto,res:res})
               }
             });
+
+            sector.cantidadImagenes = sector.cantidadImagenes + 1;
           }
-      });
+        });
 
-
-      /*let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
+      console.log("IMPROOO",this.arrayImages,item)
+      let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
       this.arrayImages[index].add = true;
-      console.log(this.arrayImages)*/
+      console.log(this.arrayImages)
     });
   }
 
   quitarItem(item: any){
     item.add=false;
+
+    this.contratoFinal.sectores.forEach((sector: any) => {
+      console.log("ENTRAAAA",sector)
+      if(sector.id == this.idSectorElegido){
+        sector.actividades.forEach((actividad: any) => {
+          if(actividad.id == this.idActividadElegida){
+            console.log("ENTRAAAA")
+            let index = actividad.imagenes.findIndex((element: any) => element.id == item.id )
+            actividad.imagenes.splice(index, 1);
+            console.log(actividad.imagenes)
+          }
+        });
+
+        sector.cantidadImagenes = sector.cantidadImagenes - 1;
+      }
+    });
 
     let index = this.arrayImages.findIndex((element: any) => element.id == item.id )
     this.arrayImages.splice(index, 1);
@@ -237,6 +297,17 @@ export class GeneracionReportesComponent implements OnInit {
 
   public descargaPlantillaGeneral(): void{
     console.log(this.contratoFinal)
+
+    this.contratoFinal.sectores.forEach((sector: any) => {
+      let tieneImagenes: boolean = true;
+      sector.actividades.forEach((actividad: any) => {
+        if(actividad.imagenes.length == 0){
+          tieneImagenes = false;
+        }
+      });
+    });
+
+
     const generarPlantillaGeneral = new PlantillaGeneral();
     const documento = generarPlantillaGeneral.crearDocumento([
       this.contratoFinal,

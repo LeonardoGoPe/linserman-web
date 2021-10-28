@@ -1,0 +1,66 @@
+<app-navegacion></app-navegacion>
+<div class="container-fluid px-5 py-5">
+   <div class="row justify-content-center clientes">
+        <!-- <app-loading *ngIf="processing"></app-loading> -->
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-12">
+            <div class="search-container">
+                <div class="row">
+                    <form id="formaSearchClientes" class="formSearch"> 
+                        <div class="row">
+                            <div class="form-group col-6 col-sm-2 col-md-2 col-lg-2 col-xl-2 my-input">
+                            </div>
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-3 col-xl-3 my-input my-select-2">
+                                <label for="">Empresa</label>
+                                    <input name="identificacionSearch">
+                            </div>
+                            <div class="form-group col-6 col-sm-2 col-md-3 col-lg-2 col-xl-3 my-input my-select-2">
+                                <label for="">RUC</label>
+                                <input name="clienteSearch">
+                            </div>                           
+
+                            <div class="form-group col-12 col-sm-4 col-md-3 col-lg-4 col-xl-3 buttons search">
+                                <button type="submit" class="btn success-button btn-searchs" id="buscar"
+                                    >Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tableContent">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="nameCliente" scope="col">Nombre Empresa</th>
+                        <th scope="col">RUC</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let empresa of listaEmpresas | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                        <td>{{empresa.nombre_empresa}}</td>
+                        <td>{{empresa.ruc_empresa}}</td>
+                        <td>{{empresa.descripcion_empresa}}</td>
+                        <td class="accions">
+                           <img alt="search" src="assets/editar.svg" (click)="editarEmpresa(empresa.id_empresa)">
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-12">
+               <div class="form-group col-6 buttons search">
+                  <button type="submit" class="btn btn-info" (click)="crearEmpresa()" id="buscar">
+                     Nueva Empresa
+                  </button>
+               </div>
+               
+               <div class="form-group col-6 d-flex flex-row-reverse">
+                  <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,4 +20,13 @@ export class NavegacionComponent implements OnInit {
     console.log("dsad")
     this.router.navigateByUrl(`${ventana}`);
   }
+
+  cerrarSesion(){
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    this.router.navigateByUrl('/login');
+  }
+
+
 }

@@ -8,7 +8,17 @@
                 <div class="row">
                     <form id="formaSearchClientes" class="formSearch"> 
                         <div class="row">
+
                             <div class="form-group col-3 my-input">
+                                <label class="form-group col-12" for="">Empresa</label>
+                                <select class="col-12" name="sector" style="height:2.5rem;" [(ngModel)]="empresaElegida">
+                                    <option style="height:2.5rem;" [ngValue]="c.id_empresa" *ngFor="let c of arrayEmpresas">
+                                        {{c.nombre_empresa}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-2 my-input">
                                 <label class="form-group col-12" for="">Contrato</label>
                                 <input 
                                     class="col-12" 
@@ -37,7 +47,7 @@
                                 </select>
                             </div>                          
 
-                            <div class="form-group col-2 buttons search mt-3">
+                            <div class="form-group col-1 buttons search mt-3">
                                 <button type="submit" class="btn success-button btn-searchs mt-1" id="buscar" (click)="buscarImagenes()"
                                     >Buscar
                                 </button>
@@ -85,31 +95,34 @@
                 </div>
             </div>
             <div class="row d-flex pt-5">
-                <div class="card col-3" *ngFor="let item of cloudFiles | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                <div class="card col-2" *ngFor="let item of cloudFiles | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                    <ng-container *ngIf="item.datos != null">
                     <div *ngIf="!item.hidden">
-                        <img class="card-img-top"  [src]="item.url" height="450" alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Autor: {{item.datos.usuario}}
-                            </p>
-                            <p class="card-text">
-                                Fecha de la foto: {{item.datos.fecha}}
-                            </p>
-                            <button 
-                                *ngIf="!item.add" 
-                                class="btn btn-primary"
-                                (click)="agregarItem(item)">
-                                    Agregar
-                            </button>
-        
-                            <button 
-                                *ngIf="item.add" 
-                                class="btn btn-danger"
-                                (click)="quitarItem(item)">
-                                    Quitar
-                            </button>
+                        <img class="card-img-top"  [src]="item.url" height="350" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">
+                                        <b>Autor:</b>{{item.datos.usuario}}
+                                </p>
+                                <p class="card-text">
+                                    <b>Fecha de la foto:</b> {{item.datos.fecha}}
+                                </p>
+                                <button 
+                                    *ngIf="!item.add" 
+                                    class="btn btn-primary"
+                                    (click)="agregarItem(item)">
+                                        Agregar
+                                </button>
+            
+                                <button 
+                                    *ngIf="item.add" 
+                                    class="btn btn-danger"
+                                    (click)="quitarItem(item)">
+                                        Quitar
+                                </button>
+                            </div>
+                       
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="d-flex flex-row-reverse mt-4">
@@ -119,10 +132,10 @@
                 (click)="descargaPlantillaGeneral()">
                     Plantilla General
             </button>
-            <button type="button" class="btn btn-success m-2"
+            <!--<button type="button" class="btn btn-success m-2"
                 (click)="descargaPlantillaContrato()">
                     Plantilla Contrato
-            </button>
+            </button>-->
         </div>
     </div>
 </div>

@@ -9,43 +9,58 @@ import { PersonalComponent } from './pages/modulos/personal/personal.component';
 import { ReportesComponent } from './pages/modulos/reportes/reportes.component';
 import { ZonasComponent } from './pages/modulos/zonas/zonas.component';
 
+//Guard para la pantalla de login en authentication
+import { AuthGuard } from './components/guards/auth.guard';
+import { EmpresaComponent } from './pages/modulos/empresa/empresa.component';
+
 const routes: Routes = [
-  { 
-    path: '',   redirectTo: '/login', pathMatch: 'full' 
+  {
+    path: "", redirectTo: "login", pathMatch: "full",
   },
 
   { 
-    path: 'actividades', component:ActividadesComponent 
+    path: 'actividades', component:ActividadesComponent,
+    canActivate: [AuthGuard],
   },
 
   { 
-    path: 'contratos',  component:ContratosComponent 
+    path: 'contratos',  component:ContratosComponent,
+    canActivate: [AuthGuard],
    },
 
   { 
-    path: 'zonas-referenciales', component:ZonasComponent
+    path: 'zonas-referenciales', component:ZonasComponent,
+    canActivate: [AuthGuard],
   },
 
   { 
-    path: 'personal', component:PersonalComponent
+    path: 'personal', component:PersonalComponent,
+    canActivate: [AuthGuard],
   },
 
   { 
-    path: 'informacion', component:InformacionComponent
+    path: 'informacion', component:InformacionComponent,
+    canActivate: [AuthGuard],
   },
 
   { 
-    path: 'generacion-reportes', component:GeneracionReportesComponent
+    path: 'generacion-reportes', component:GeneracionReportesComponent,
+    canActivate: [AuthGuard],
   },
 
   { 
-    path: 'reportes', component:ReportesComponent
+    path: 'reportes', component:ReportesComponent,
+    canActivate: [AuthGuard],
+  },
+
+  { 
+    path: 'empresa', component:EmpresaComponent,
+    canActivate: [AuthGuard],
   },
 
   {  
     path:'login',component:LoginComponent,
-  },
-  
+  }
 ];
 
 @NgModule({

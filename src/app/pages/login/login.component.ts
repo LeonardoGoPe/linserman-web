@@ -79,6 +79,9 @@ export class LoginComponent implements OnInit {
     this.authService.apiLogin(formData).subscribe((data: any) =>{
       console.log(data.data.tipo_usuario)
       localStorage.setItem('token',data.data.token);
+      localStorage.setItem('userData', formData);
+
+      this.authService.isLogged = true;
 
       console.log(localStorage.getItem('token'))
 

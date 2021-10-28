@@ -1,7 +1,7 @@
 <app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
 <div>
    <div class="row d-flex justify-content-center mt-4">
-         <label><b class="row d-flex justify-content-center contrato col-12">Editar Usuario</b></label>
+         <label><b class="row d-flex justify-content-center contrato col-12">Crear Usuario</b></label>
    </div>
 
 
@@ -32,7 +32,11 @@
 
    <div class="row d-flex justify-content-center mt-3">
          <label class="row col-5" for="firstname">Empresa</label>
-         <input class="row col-5" type="text" [(ngModel)]="usuarioData.empresa">
+         <select class="row col-5" [(ngModel)]="usuarioData.empresa">
+         <option [ngValue]="c.id_empresa" *ngFor="let c of arrayEmpresas">
+            {{c.nombre_empresa}}
+         </option>
+      </select>
    </div>
 
    <div class="row d-flex justify-content-center mt-3">

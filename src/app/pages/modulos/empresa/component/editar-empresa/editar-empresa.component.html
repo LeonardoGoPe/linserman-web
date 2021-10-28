@@ -1,0 +1,37 @@
+<app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
+<div>
+   <div class="row d-flex justify-content-center mt-4">
+         <label><b class="row d-flex justify-content-center contrato col-12">Editar Empresa</b></label>
+   </div>
+
+
+   <div class="row d-flex justify-content-center mt-5">
+         <label class="row col-5" for="firstname">Nombre de Empresa</label>
+         <input class="row col-5" type="text" [(ngModel)]="empresaData.nombre_empresa">
+   </div>
+
+   <div class="row d-flex justify-content-center mt-3">
+         <label class="row col-5" for="firstname">RUC</label>
+         <input class="row col-5" type="text" [(ngModel)]="empresaData.ruc_empresa">
+   </div>
+
+   <div class="row d-flex justify-content-center mt-3">
+         <label class="row col-5" for="firstname">Descripcion de Empresa</label>
+         <input class="row col-5" type="text" [(ngModel)]="empresaData.descripcion_empresa">
+   </div>
+
+   <div class="row col-12 d-flex justify-content-around my-5">
+      <div class="form-group row col-4 d-flex justify-content-centerbuttons search">
+         <button class="btn btn-info" (click)="closeModal()">
+            Salir
+         </button>
+      </div>
+
+      <div class="form-group row col-4 d-flex justify-content-center buttons search">
+         <button class="btn btn-info" (click)="actualizarEmpresa()">
+            Actualizar
+         </button>
+      </div>
+   </div>
+ 
+</div>

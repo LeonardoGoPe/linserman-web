@@ -18,6 +18,15 @@
          <textarea class="row col-5" type="text" [(ngModel)]="descripcionContrato"></textarea>
    </div>
 
+   <div class="row d-flex justify-content-center mt-3">
+      <label class="row col-5" for="firstname">Empresa</label>
+      <select class="row col-5" [(ngModel)]="codigoEmpresa">
+         <option [ngValue]="c.id_empresa" *ngFor="let c of arrayEmpresas">
+            {{c.nombre_empresa}}
+         </option>
+      </select>
+   </div>
+
 
 
    
