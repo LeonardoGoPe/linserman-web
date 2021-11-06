@@ -161,7 +161,7 @@ export class GeneracionReportesComponent implements OnInit {
     console.log(this.contratoFinal)
 
 
-    this.fStorage.ref(`Limpiaseguro/contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
+    this.fStorage.ref(`${this.contratoFinal.nombreEmpresa}/contratos/${this.idContratoElegido}/${this.idSectorElegido}/${this.idActividadElegida}`).listAll().subscribe((res)=>{
       this.cargando = false;
       console.log(res);
       res.items.forEach(element => {

@@ -20,12 +20,12 @@ export class PlantillaGeneral {
             children: [
                /*Titulo documento*/
                new Paragraph({
-                  text: informacion.nombreEmpresa,
+                  text: contratoFinal.nombreEmpresa,
                   heading: HeadingLevel.TITLE
                }),
 
                /*Detalles debajo del título*/
-               this.crearDetallesEmpresa(informacion.celular, informacion.contacto, informacion.correoElectronico, informacion.direccion),
+               /*this.crearDetallesEmpresa(informacion.celular, informacion.contacto, informacion.correoElectronico, informacion.direccion),*/
 
                /*Cabecera*/
                this.crearCabecera(contratoFinal.nombre),
