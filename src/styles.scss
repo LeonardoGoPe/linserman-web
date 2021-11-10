@@ -20,4 +20,8 @@ body{
     &.modalGenerales .modal-dialog {
         max-width: 650px;
     }
+
+    &.modalVisualizacion .modal-dialog {
+        max-width: 950px;
+    }
 }

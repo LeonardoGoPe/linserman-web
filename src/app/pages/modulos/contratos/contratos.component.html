@@ -44,28 +44,19 @@
                      <tr>
                         <th >Nombre del contrato</th>
                         <th >Descripción del contrato</th>
-                        <th >Supervisor asignado</th>
-                        <th >Fiscalizador asignado</th>
+                        <th >Estado del contrato</th>
+                        <th >Acciones</th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let contrato of arrayContratos | nombrecontrato: nombreContrato | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                     <tr *ngFor="let contrato of arrayContratos | nombrecontrato: nombreContrato | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ">
                         <td>{{contrato.nombre_contrato}}</td>
                         <td>{{contrato.descripcion}}</td>
-                        <td>
-                            <div *ngFor="let usuario of contrato.usuarios">
-                                <div *ngIf="usuario.tipo_usuario == 1">
-                                    {{usuario.apellidos}} {{usuario.nombres}} 
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div *ngFor="let usuario of contrato.usuarios">
-                                <div *ngIf="usuario.tipo_usuario == 2">
-                                    {{usuario.apellidos}} {{usuario.nombres}} 
-                                </div>
-                            </div>
-                        </td>
+                        <td *ngIf="contrato.contratoActivo">Activo</td>
+                        <td *ngIf="!contrato.contratoActivo">Inactivo</td>
+                        <td class="accions">
+                            <img alt="search" src="assets/editar.svg" (click)="editarContrato(contrato.id)">
+                         </td>
                      </tr>
                   </tbody>
                </table>

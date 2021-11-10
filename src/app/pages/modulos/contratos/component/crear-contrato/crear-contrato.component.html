@@ -32,6 +32,9 @@
    
    <div class="row d-flex justify-content-center px-2 mt-4">
          <label class="row d-flex align-items-start flex-column contrato col-12 px-5"><b>Información del contrato ({{data.sectores.length}})</b></label>
+         <button class="btn btn-info" (click)="visualizarSectores()">
+            Visualizar Sectores Agregados
+         </button>
    </div>
 
    <div class="row d-flex justify-content-center">
@@ -42,7 +45,7 @@
    <div class="row d-flex justify-content-center">
       <label class="row col-5" for="firstname">Zona referencial</label>
       <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="zonaReferencial">
-         <option [ngValue]="c.id_sector" *ngFor="let c of UbicacionList">
+         <option [ngValue]="[c.id_sector,c.ciudad]" *ngFor="let c of UbicacionList">
             {{c.ciudad}} - {{c.zona_ciudad}}
          </option>
       </select>
@@ -51,7 +54,7 @@
    <div class="row d-flex justify-content-center">
       <label class="row col-5" for="firstname">Supervisor(es) asignado(s)</label>
       <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="supervisoresAignados">
-         <option [ngValue]="c.id" *ngFor="let c of arraySupervisores">
+         <option [ngValue]="[c.id,c.apellidos,c.nombres]" *ngFor="let c of arraySupervisores">
             {{c.apellidos}} {{c.nombres}}
          </option>
       </select>
@@ -60,7 +63,7 @@
    <div class="row d-flex justify-content-center">
       <label class="row col-5" for="firstname">Fiscalizador(es) asignado(s)</label>
       <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="fiscalizadoresAsignados">
-         <option [ngValue]="c.id" *ngFor="let c of arrayFiscalizadores">
+         <option [ngValue]="[c.id,c.apellidos,c.nombres]" *ngFor="let c of arrayFiscalizadores">
             {{c.apellidos}} {{c.nombres}}
          </option>
       </select>
@@ -69,7 +72,7 @@
    <div class="row d-flex justify-content-center">
       <label class="row col-5" for="firstname">Actividades</label>
       <select class="row seleccion-multiple col-5" multiple="multiple" [(ngModel)]="actividadesAsignadas">
-         <option [ngValue]="c.id_actividad" *ngFor="let c of ActividadesList">
+         <option [ngValue]="[c.id_actividad,c.texto_descripcion]" *ngFor="let c of ActividadesList">
             {{c.texto_descripcion}}
          </option>
       </select>

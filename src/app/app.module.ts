@@ -41,6 +41,7 @@ import { FlatpickrModule } from "angularx-flatpickr";
 import { EmpresaComponent } from './pages/modulos/empresa/empresa.component';
 import { CrearEmpresaComponent } from './pages/modulos/empresa/component/crear-empresa/crear-empresa.component';
 import { EditarEmpresaComponent } from './pages/modulos/empresa/component/editar-empresa/editar-empresa.component';
+import { VisualizarSectoresComponent } from './pages/modulos/contratos/component/visualizar-sectores/visualizar-sectores.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { EditarEmpresaComponent } from './pages/modulos/empresa/component/editar
     EmpresaComponent,
     CrearEmpresaComponent,
     EditarEmpresaComponent,
+    VisualizarSectoresComponent,
   ],
   imports: [
     BrowserModule,

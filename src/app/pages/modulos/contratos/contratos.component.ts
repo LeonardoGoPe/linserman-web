@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralesService } from 'src/app/services/generales.service';
 import { CrearContratoComponent } from './component/crear-contrato/crear-contrato.component';
+import { EditarContratoComponent } from './component/editar-contrato/editar-contrato.component';
 
 @Component({
   selector: 'app-contratos',
@@ -23,10 +24,12 @@ export class ContratosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.arrayContratos = []
     this.generalesService.getContratos()?.subscribe((data: any) =>{
       this.arrayContratos = data.data
       console.log(data)
     })
+    console.log(this.arrayContratos)
   }
 
   crearContrato() {
@@ -34,12 +37,27 @@ export class ContratosComponent implements OnInit {
         windowClass: 'modals modalCrearContrato' 
     });
     modalCrearContrato.componentInstance.tipoModal = "remover";
-    modalCrearContrato.componentInstance.emitRemoverAfiliado.subscribe((emmitedValue: any) => {
+    /*modalCrearContrato.componentInstance.emitRemoverAfiliado.subscribe((emmitedValue: any) => {
+      this.arrayContratos = []
+      this.generalesService.getContratos()?.subscribe((data: any) =>{
+        this.arrayContratos = data.data
+        console.log(data)
+      })
+    });*/
+  }
+
+  editarContrato(id: any){
+    const modalCrearContrato = this.modalService.open(EditarContratoComponent, {
+      windowClass: 'modals modalGenerales' 
+    });
+    modalCrearContrato.componentInstance.empresa = id;
+    modalCrearContrato.componentInstance.empresaElegida.subscribe((empresa: any) => {
+      this.arrayContratos = []
       this.generalesService.getContratos()?.subscribe((data: any) =>{
         this.arrayContratos = data.data
         console.log(data)
       })
     });
-}
+  }
 
 }
