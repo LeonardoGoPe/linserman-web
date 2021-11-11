@@ -2,17 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralesService } from 'src/app/services/generales.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import { EditarSectoresContratoComponent } from '../editar-sectores-contrato/editar-sectores-contrato.component';
-import { VisualizarSectoresComponent } from '../visualizar-sectores/visualizar-sectores.component';
 @Component({
-  selector: 'app-editar-contrato',
-  templateUrl: './editar-contrato.component.html',
-  styleUrls: ['./editar-contrato.component.scss']
+  selector: 'app-editar-sectores-contrato',
+  templateUrl: './editar-sectores-contrato.component.html',
+  styleUrls: ['./editar-sectores-contrato.component.scss']
 })
-export class EditarContratoComponent implements OnInit {
+export class EditarSectoresContratoComponent implements OnInit {
 
   @Input() empresa: any;
-  @Output() empresaElegida: EventEmitter<any> = new EventEmitter();
+  @Output() respuesta: EventEmitter<any> = new EventEmitter();
 
   UbicacionList: any = []
   ActividadesList: any = []
@@ -22,13 +20,7 @@ export class EditarContratoComponent implements OnInit {
 
   arrayEmpresas: any = []
 
-  data: any = {
-    sectores: [],
-    descripcion: null,
-    nombre_contrato: null
-  }
-
-  sectorTexto: any = []
+  dataContrato: any = {}
 
   botonDisabled = true;
 
@@ -42,19 +34,22 @@ export class EditarContratoComponent implements OnInit {
   fiscalizadoresAsignados: any = [];
   actividadesAsignadas: any = [];
 
+  arrayIndexRemovidos: any = []
+  arrayReferenciaSectores: any = []
+
   constructor(
     private modalService: NgbModal,
     private generalesService: GeneralesService,
     private usuariosServices: UsuariosService
   ) { }
-
   mostrarMensaje: boolean = false;
   mensaje: any;
   codigoRespuestaHttp: any;
   ngOnInit(): void {
 
     this.generalesService.getContrato(this.empresa)?.subscribe((data: any) =>{
-      console.log(data.data)
+      this.dataContrato = data.data
+      console.log("this.dataContrato",this.dataContrato)
       this.nombreContrato = data.data.nombre_contrato
       this.descripcionContrato = data.data.descripcion
       this.codigoEmpresa = data.data.empresa.id_empresa
@@ -88,35 +83,6 @@ export class EditarContratoComponent implements OnInit {
     })
   }
 
-  agregarOtroSector(){
-    let sectores: any = {
-      sector_data: null,
-      usuarios_supervisores: [],
-      usuarios_fiscalizadores: [],
-      actividades: [],
-      nombre_sector: null
-    }
-
-    sectores.nombre_sector = this.sectorIngresado
-    sectores.sector_data = this.zonaReferencial 
-    sectores.usuarios_fiscalizadores = this.fiscalizadoresAsignados
-    sectores.usuarios_supervisores = this.supervisoresAignados
-    sectores.actividades = this.actividadesAsignadas
-
-    console.log(sectores)
-    this.data.sectores.push(sectores)
-
-    this.sectorIngresado = null
-    this.zonaReferencial = null
-    this.fiscalizadoresAsignados = null
-    this.supervisoresAignados = null
-    this.actividadesAsignadas = null
-
-    console.log(this.data)
-    this.botonDisabled = false;
-  }
-
-
   accionMostrarMensaje(mensaje:string,codigo:number){
     this.mensaje = mensaje;
     this.codigoRespuestaHttp = codigo;
@@ -130,32 +96,16 @@ export class EditarContratoComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  visualizarSectores(){
-    const modalVisualizarSector = this.modalService.open(EditarSectoresContratoComponent, {
-      windowClass: 'modals modalVisualizacion' 
-    });
-    modalVisualizarSector.componentInstance.arraySectores = this.sectorTexto;
-    modalVisualizarSector.componentInstance.empresa = this.empresa;
-    modalVisualizarSector.componentInstance.respuesta.subscribe((respuesta: any) =>{
-      console.log(respuesta)
-      if(respuesta.length > 0){
+  quitarSector(sectorElegido: any){
+    let indexSectorRemover: any;
+    this.arrayReferenciaSectores.forEach((sector: any, index: any) => {
+      if(sector.nombre_sector === sectorElegido.nombre_sector){
+        indexSectorRemover = index
+        this.arrayIndexRemovidos.push(index)
       }
-    })
-  }
+    });
 
-  crearContrato(){
-
-    this.data.nombre_contrato = this.nombreContrato
-    this.data.descripcion = this.descripcionContrato
-    this.data.empresa = this.codigoEmpresa
-    
-    console.log(this.data)
-
-    this.generalesService.postContratos(this.data)?.subscribe((data: any) =>{
-      console.log(data)
-      this.accionMostrarMensaje("Contrato creado con éxito",200)
-      this.modalService.dismissAll();
-    })
+    this.arrayReferenciaSectores.splice(indexSectorRemover,1)
   }
 
 }

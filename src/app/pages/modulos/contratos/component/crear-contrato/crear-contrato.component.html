@@ -30,9 +30,9 @@
 
 
    
-   <div class="row d-flex justify-content-center px-2 mt-4">
-         <label class="row d-flex align-items-start flex-column contrato col-12 px-5"><b>Información del contrato ({{data.sectores.length}})</b></label>
-         <button class="btn btn-info" (click)="visualizarSectores()">
+   <div class="row d-flex justify-content-start px-2 mt-4">
+         <label class="row d-flex align-items-start flex-column contrato col-6 px-5 mx-2"><b>Información del contrato ({{data.sectores.length}})</b></label>
+         <button class="btn btn-info botonVisualizar col-4" (click)="visualizarSectores()">
             Visualizar Sectores Agregados
          </button>
    </div>
@@ -81,7 +81,7 @@
    <div class="row d-flex justify-content-center px-5">
       <div class="form-group row col-7 d-flex justify-content-centerbuttons search">
          <button class="btn btn-warning" (click)="agregarOtroSector()">
-            + Agregar otro sector
+            Agregar Sector al Contrato
          </button>
       </div>
    </div>

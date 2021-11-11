@@ -42,6 +42,7 @@ import { EmpresaComponent } from './pages/modulos/empresa/empresa.component';
 import { CrearEmpresaComponent } from './pages/modulos/empresa/component/crear-empresa/crear-empresa.component';
 import { EditarEmpresaComponent } from './pages/modulos/empresa/component/editar-empresa/editar-empresa.component';
 import { VisualizarSectoresComponent } from './pages/modulos/contratos/component/visualizar-sectores/visualizar-sectores.component';
+import { EditarSectoresContratoComponent } from './pages/modulos/contratos/component/editar-sectores-contrato/editar-sectores-contrato.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { VisualizarSectoresComponent } from './pages/modulos/contratos/component
     CrearEmpresaComponent,
     EditarEmpresaComponent,
     VisualizarSectoresComponent,
+    EditarSectoresContratoComponent,
   ],
   imports: [
     BrowserModule,
