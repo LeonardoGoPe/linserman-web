@@ -64,35 +64,6 @@ export class EditarContratoComponent implements OnInit {
       this.contratoActivo = data.data.contratoActivo
       this.codigoContrato = data.data.id
 
-      data.data.sectores.forEach((sector: any) => {
-        let actividades: any = []
-        let supervisores: any = []
-        let fiscalizadores: any = []
-
-        let sectorData: any = {}
-
-        sector.actividades.forEach((actividad: any) => {
-          actividades.push(actividad.id_actividad)
-        });
-
-        sector.usuarios_fiscalizadores.forEach((usuario: any) => {
-          fiscalizadores.push(usuario.id)
-        });
-
-        sector.usuarios_supervisores.forEach((usuario: any) => {
-          supervisores.push(usuario.id)
-        });
-
-        sectorData.id = sector.id
-        sectorData.sector_data = sector.sector_data
-        sectorData.nombre_sector = sector.nombre_sector
-        sectorData.actividades = actividades
-        sectorData.usuarios_fiscalizadores = fiscalizadores
-        sectorData.usuarios_supervisores = supervisores
-
-        this.arrayDataSector.push(sectorData)
-      });
-
       this.generalesService.getEmpresas()?.subscribe((data: any) =>{
         this.arrayEmpresas = data.data
       })
@@ -179,9 +150,14 @@ export class EditarContratoComponent implements OnInit {
   }
 
   actualizarCabecera(){
-    this.data.nombre_contrato = this.nombreContrato
-    this.data.descripcion = this.descripcionContrato
-    this.data.empresa = this.codigoEmpresa
-    this.data.contratoActivo = this.contratoActivo
+    let requestBody: any = {}
+    requestBody.empresa = this.codigoEmpresa
+    requestBody.descripcion = this.descripcionContrato
+    requestBody.nombre_contrato = this.nombreContrato
+    requestBody.contratoActivo = this.contratoActivo
+
+    this.generalesService.puCabeceraContrato(this.codigoContrato,requestBody)?.subscribe((resp: any) =>{
+      this.accionMostrarMensaje("Cabecera del Contrato Actualizada con Éxito",resp.code)
+    })
   }
 }

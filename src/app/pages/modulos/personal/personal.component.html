@@ -47,7 +47,10 @@
                            <span *ngIf="personal.tipo_usuario==3" >Administrador</span>
                         </td>
                         <td class="accions">
-                           <img alt="search" src="assets/editar.svg" (click)="editarUsuario(personal.id)">
+                            <img alt="search" class="mx-3" src="assets/editar.svg" (click)="editarUsuario(personal.id)">
+                            <button type="submit" class="btn" (click)="actualizarPassword(personal)" id="buscar">
+                                Cambiar Clave
+                            </button>
                         </td>
                       </tr>
                       

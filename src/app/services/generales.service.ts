@@ -144,6 +144,22 @@ export class GeneralesService {
     );
   }
 
+  puCabeceraContrato(id: any, data: any){
+    return this.apiService.ApiCall(
+      `contratoCabecera/${id}`,
+      "PUT",
+      data,
+    );
+  }
+
+  postAgregarSectorXContratoExistente(id: any, data: any){
+    return this.apiService.ApiCall(
+      `contratoAgregarSector/${id}`,
+      "POST",
+      data,
+    );
+  }
+
 
 
   /*-------------------------------------------*/

@@ -47,4 +47,12 @@ export class UsuariosService {
     );
   }
 
+  postCambioPassUsuario(id: any, data: any){
+    return this.apiService.ApiCall(
+      `usuarios/cambiopass/${id}`,
+      "POST",
+      data
+    );
+  }
+
 }

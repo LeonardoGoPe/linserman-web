@@ -2,7 +2,9 @@
 <div>
    <div *ngFor="let sector of arraySectores">
       <div class="card mx-5 my-3">
-         <h5 class="card-header">Nombre del Sector: {{sector.nombre_sector}}</h5>
+         <h5 class="card-header">Nombre del Sector:
+            <input type="text" [(ngModel)]="sector.nombre_sector">
+         </h5>
          <div class="card-body">
             <h5 class="card-title">Zona Referencial:
                <select class="row col-5" name="Ubicacion" id="Ubicacion" [(ngModel)]="sector.sector_data.id_sector">
@@ -11,6 +13,10 @@
                   </option>
                </select>
             </h5>
+            <div class="row col-12 my-3">
+               <label class="row col-4" for="firstname">Sector del Contrato Habilitado</label>
+               <input class="row col-1" type="checkbox" [(ngModel)]="sector.contratoXSectorActivo">
+            </div>
             <div class="row">
                <div class="col-4">
                   <p class="card-text">Fiscalizador(es): </p>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { CambiarPassComponent } from './component/cambiar-pass/cambiar-pass.component';
 import { CrearPersonalComponent } from './component/crear-personal/crear-personal.component';
 import { EditarPersonalComponent } from './component/editar-personal/editar-personal.component';
 
@@ -64,5 +65,25 @@ export class PersonalComponent implements OnInit {
       }
     });
   }
+
+  actualizarPassword(usuario: any){
+    const modalCrearContrato = this.modalService.open(CambiarPassComponent, {
+      windowClass: 'modals modalGenerales' 
+    });
+    modalCrearContrato.componentInstance.usuario = usuario;
+    modalCrearContrato.componentInstance.usuarioElegido.subscribe((usuario: any) => {
+      console.log(usuario)
+      if(usuario){
+        this.usuariosService.getUsuarios()?.subscribe((data: any) =>{ //Signo ? para eliminar error de null
+          console.log(data)
+          this.listaPersonal = data.data
+        }, err =>{
+          console.log(err)
+        })
+      }
+    });
+  }
+
+
 
 }
