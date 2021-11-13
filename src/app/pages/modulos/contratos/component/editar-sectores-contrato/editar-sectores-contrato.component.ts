@@ -10,6 +10,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class EditarSectoresContratoComponent implements OnInit {
 
   @Input() empresa: any;
+  @Input() codigoContrato: any;
+  @Input() arraySectores: any;
   @Output() respuesta: EventEmitter<any> = new EventEmitter();
 
   UbicacionList: any = []
@@ -47,6 +49,8 @@ export class EditarSectoresContratoComponent implements OnInit {
   codigoRespuestaHttp: any;
   ngOnInit(): void {
 
+    console.log("this.arraySectores",this.arraySectores)
+
     this.generalesService.getContrato(this.empresa)?.subscribe((data: any) =>{
       this.dataContrato = data.data
       console.log("this.dataContrato",this.dataContrato)
@@ -83,6 +87,32 @@ export class EditarSectoresContratoComponent implements OnInit {
     })
   }
 
+  closeModal(){
+    this.modalService.dismissAll();
+  }
+
+  actualizarSector(sectorElegido: any){
+    console.log(sectorElegido)
+    console.log(sectorElegido.sector_data.id_sector)
+    let data: any = {}
+    let sector: any = {}
+
+    sector.sector_data = sectorElegido.sector_data.id_sector
+    sector.usuarios_supervisores = sectorElegido.usuarios_supervisores
+    sector.usuarios_fiscalizadores = sectorElegido.usuarios_fiscalizadores
+    sector.actividades = sectorElegido.actividades
+
+    data.sector = sector
+
+
+    let params: any = {}
+    params.id_sector = sectorElegido.id
+
+    this.generalesService.putContratosXSector(this.codigoContrato,data,params)?.subscribe((resp: any) =>{
+      this.accionMostrarMensaje("Sector Actualizado Con Éxito",resp.code)
+    })
+  }
+
   accionMostrarMensaje(mensaje:string,codigo:number){
     this.mensaje = mensaje;
     this.codigoRespuestaHttp = codigo;
@@ -92,20 +122,5 @@ export class EditarSectoresContratoComponent implements OnInit {
     }, 500);
   }
 
-  closeModal(){
-    this.modalService.dismissAll();
-  }
-
-  quitarSector(sectorElegido: any){
-    let indexSectorRemover: any;
-    this.arrayReferenciaSectores.forEach((sector: any, index: any) => {
-      if(sector.nombre_sector === sectorElegido.nombre_sector){
-        indexSectorRemover = index
-        this.arrayIndexRemovidos.push(index)
-      }
-    });
-
-    this.arrayReferenciaSectores.splice(indexSectorRemover,1)
-  }
 
 }

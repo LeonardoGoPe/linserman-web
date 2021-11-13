@@ -135,5 +135,16 @@ export class GeneralesService {
     );
   }
 
+  putContratosXSector(id: any, data: any,params: any){
+    return this.apiService.ApiCall(
+      `contratos/${id}`,
+      "PUT",
+      data,
+      params
+    );
+  }
+
+
+
   /*-------------------------------------------*/
 }

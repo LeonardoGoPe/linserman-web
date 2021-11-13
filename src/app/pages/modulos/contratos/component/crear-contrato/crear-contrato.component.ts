@@ -76,27 +76,6 @@ export class CrearContratoComponent implements OnInit {
       });
       console.log(data)
     })
-
-    //Codigo 2 es fiscalizador
-    this.usuariosServices.getUsuariosPorRol(2)?.subscribe((data: any) =>{
-      data.data.forEach((usuarioRol: any) => {
-        if(usuarioRol.is_active){
-          this.arrayFiscalizadores.push(usuarioRol)
-        }
-      });
-      console.log(data)
-    })
-
-    //Codigo 1 es supervisor
-    this.usuariosServices.getUsuariosPorRol(1)?.subscribe((data: any) =>{
-      data.data.forEach((usuarioRol: any) => {
-        if(usuarioRol.is_active){
-          this.arraySupervisores.push(usuarioRol)
-        }
-      });
-      console.log(data)
-    })
-
   }
 
   agregarOtroSector(){
@@ -165,6 +144,30 @@ export class CrearContratoComponent implements OnInit {
 
     console.log(this.data)
     this.botonDisabled = false;
+  }
+
+  filtroUsuariosEmpresa(){
+  //Codigo 2 es fiscalizador
+  this.arrayFiscalizadores = []
+  this.usuariosServices.getUsuariosPorRol(2)?.subscribe((data: any) =>{
+    data.data.forEach((usuarioRol: any) => {
+      if(usuarioRol.is_active && usuarioRol.empresa.id_empresa == this.codigoEmpresa){
+        this.arrayFiscalizadores.push(usuarioRol)
+      }
+    });
+    console.log(data)
+  })
+
+  //Codigo 1 es supervisor
+  this.arraySupervisores = []
+  this.usuariosServices.getUsuariosPorRol(1)?.subscribe((data: any) =>{
+    data.data.forEach((usuarioRol: any) => {
+      if(usuarioRol.is_active && usuarioRol.empresa.id_empresa == this.codigoEmpresa){
+        this.arraySupervisores.push(usuarioRol)
+      }
+    });
+    console.log(data)
+  })
   }
 
 

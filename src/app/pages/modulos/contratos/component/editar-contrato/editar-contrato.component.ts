@@ -28,13 +28,16 @@ export class EditarContratoComponent implements OnInit {
     nombre_contrato: null
   }
 
-  sectorTexto: any = []
+  arrayDataSector: any = []
+  empresaId: any;
 
   botonDisabled = true;
 
   nombreContrato: any;
   descripcionContrato: any;
   codigoEmpresa: any;
+  codigoContrato: any;
+  contratoActivo: boolean = false;
 
   sectorIngresado: any;
   zonaReferencial: any;
@@ -58,6 +61,37 @@ export class EditarContratoComponent implements OnInit {
       this.nombreContrato = data.data.nombre_contrato
       this.descripcionContrato = data.data.descripcion
       this.codigoEmpresa = data.data.empresa.id_empresa
+      this.contratoActivo = data.data.contratoActivo
+      this.codigoContrato = data.data.id
+
+      data.data.sectores.forEach((sector: any) => {
+        let actividades: any = []
+        let supervisores: any = []
+        let fiscalizadores: any = []
+
+        let sectorData: any = {}
+
+        sector.actividades.forEach((actividad: any) => {
+          actividades.push(actividad.id_actividad)
+        });
+
+        sector.usuarios_fiscalizadores.forEach((usuario: any) => {
+          fiscalizadores.push(usuario.id)
+        });
+
+        sector.usuarios_supervisores.forEach((usuario: any) => {
+          supervisores.push(usuario.id)
+        });
+
+        sectorData.id = sector.id
+        sectorData.sector_data = sector.sector_data
+        sectorData.nombre_sector = sector.nombre_sector
+        sectorData.actividades = actividades
+        sectorData.usuarios_fiscalizadores = fiscalizadores
+        sectorData.usuarios_supervisores = supervisores
+
+        this.arrayDataSector.push(sectorData)
+      });
 
       this.generalesService.getEmpresas()?.subscribe((data: any) =>{
         this.arrayEmpresas = data.data
@@ -132,10 +166,11 @@ export class EditarContratoComponent implements OnInit {
 
   visualizarSectores(){
     const modalVisualizarSector = this.modalService.open(EditarSectoresContratoComponent, {
-      windowClass: 'modals modalVisualizacion' 
+      windowClass: 'modals modalEditarSectores' 
     });
-    modalVisualizarSector.componentInstance.arraySectores = this.sectorTexto;
+    modalVisualizarSector.componentInstance.arraySectores = this.arrayDataSector;
     modalVisualizarSector.componentInstance.empresa = this.empresa;
+    modalVisualizarSector.componentInstance.codigoContrato = this.codigoContrato;
     modalVisualizarSector.componentInstance.respuesta.subscribe((respuesta: any) =>{
       console.log(respuesta)
       if(respuesta.length > 0){
@@ -143,19 +178,10 @@ export class EditarContratoComponent implements OnInit {
     })
   }
 
-  crearContrato(){
-
+  actualizarCabecera(){
     this.data.nombre_contrato = this.nombreContrato
     this.data.descripcion = this.descripcionContrato
     this.data.empresa = this.codigoEmpresa
-    
-    console.log(this.data)
-
-    this.generalesService.postContratos(this.data)?.subscribe((data: any) =>{
-      console.log(data)
-      this.accionMostrarMensaje("Contrato creado con éxito",200)
-      this.modalService.dismissAll();
-    })
+    this.data.contratoActivo = this.contratoActivo
   }
-
 }

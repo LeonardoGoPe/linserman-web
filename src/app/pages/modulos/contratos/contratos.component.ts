@@ -26,8 +26,10 @@ export class ContratosComponent implements OnInit {
   ngOnInit(): void {
     this.arrayContratos = []
     this.generalesService.getContratos()?.subscribe((data: any) =>{
-      this.arrayContratos = data.data
-      console.log(data)
+
+      data.data.forEach((element: any) => {
+        this.arrayContratos.unshift(element)
+      });
     })
     console.log(this.arrayContratos)
   }
