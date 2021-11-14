@@ -149,6 +149,42 @@ export class EditarSectoresContratoComponent implements OnInit {
     })
   }
 
+  agregarSectorXContrato(sectorElegido: any){
+    let data: any = []
+    let sector: any = {}
+    let sectores: any = {}
+
+    sector.sector_data = sectorElegido.sector_data.id_sector
+    sector.usuarios_supervisores = sectorElegido.usuarios_supervisores
+    sector.usuarios_fiscalizadores = sectorElegido.usuarios_fiscalizadores
+    sector.actividades = sectorElegido.actividades
+    sector.nombre_sector = sectorElegido.nombre_sector
+    data.push(sector)
+    sectores.sectores = data
+    console.log(sectores)
+
+    this.generalesService.postAgregarSectorXContratoExistente(this.codigoContrato,sectores)?.subscribe((resp: any) =>{
+      this.accionMostrarMensaje("Sector Agregado Con Éxito",resp.code)
+    })
+  }
+
+
+
+  agregarNuevoSector(){
+    let sectorData: any = {}
+
+    let sector_data: any = {}
+    sector_data.id_sector = null
+    
+    sectorData.sector_data = sector_data
+    sectorData.actividades = null
+    sectorData.usuarios_fiscalizadores = null
+    sectorData.usuarios_supervisores = null
+    sectorData.contratoXSectorActivo = true
+    sectorData.esNuevoSector = true
+    this.arraySectores.push(sectorData)
+  }
+
   accionMostrarMensaje(mensaje:string,codigo:number){
     this.mensaje = mensaje;
     this.codigoRespuestaHttp = codigo;
