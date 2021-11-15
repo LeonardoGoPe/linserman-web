@@ -65,9 +65,12 @@ export class EditarPersonalComponent implements OnInit {
     console.log(this.usuario)
 
     this.usuariosService.putUsuario(this.usuario,this.usuarioData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Usuario editado con éxito",200)
       console.log(data)
       this.usuarioElegido.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

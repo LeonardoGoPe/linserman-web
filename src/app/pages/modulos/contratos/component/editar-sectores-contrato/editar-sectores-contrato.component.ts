@@ -87,6 +87,7 @@ export class EditarSectoresContratoComponent implements OnInit {
         sectorData.usuarios_fiscalizadores = fiscalizadores
         sectorData.usuarios_supervisores = supervisores
         sectorData.contratoXSectorActivo = sector.contratoXSectorActivo
+        sectorData.contratoXSectorActivoPendiente = sector.contratoXSectorActivo
 
         this.arraySectores.push(sectorData)
       });
@@ -119,6 +120,13 @@ export class EditarSectoresContratoComponent implements OnInit {
       })
 
     })
+  }
+
+  mostrarSectores(){
+    this.arraySectores.forEach((sector: any) => {
+      sector.contratoXSectorActivoPendiente = true;
+    });
+    console.log(this.arraySectores)
   }
 
   closeModal(){

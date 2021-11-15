@@ -39,9 +39,12 @@ export class EditarZonaComponent implements OnInit {
   actualizarZona(){
 
     this.generalService.putZona(this.zona,this.zonaData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Zona referencial actualizada con éxito",200)
       console.log(data)
       this.zonaElegida.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

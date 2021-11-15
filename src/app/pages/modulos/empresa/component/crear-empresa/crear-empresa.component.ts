@@ -34,9 +34,12 @@ export class CrearEmpresaComponent implements OnInit {
   crearEmpresa(){
 
     this.generalService.postEmpresa(this.empresaData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Empresa creada con éxito",200)
       console.log(data)
       this.empresaCreada.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

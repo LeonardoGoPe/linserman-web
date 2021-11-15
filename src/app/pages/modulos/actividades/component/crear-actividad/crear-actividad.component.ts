@@ -34,9 +34,12 @@ export class CrearActividadComponent implements OnInit {
   crearActividad(){
 
     this.generalService.postActividad(this.actividadData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Actividad creada con éxito",200)
       console.log(data)
       this.actividadElegida.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

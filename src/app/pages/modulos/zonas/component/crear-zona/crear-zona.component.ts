@@ -34,9 +34,12 @@ export class CrearZonaComponent implements OnInit {
   crearZona(){
 
     this.generalService.postZona(this.zonaData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Zona referencial creada con éxito",200)
       console.log(data)
       this.zonaElegida.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

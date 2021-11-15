@@ -97,6 +97,8 @@ export class CrearContratoComponent implements OnInit {
 
     let fiscalizadorIndex: any = []
     let fiscalizadorText: any = []
+
+
     this.fiscalizadoresAsignados.forEach((fisAsignado: any) => {
       fiscalizadorIndex.push(fisAsignado[0])
       fiscalizadorText.push(fisAsignado[1]+" "+fisAsignado[2])
@@ -117,33 +119,47 @@ export class CrearContratoComponent implements OnInit {
     });
 
     sectores.nombre_sector = this.sectorIngresado
-    sectores.sector_data = this.zonaReferencial[0]
+    if(this.zonaReferencial != null){
+      sectores.sector_data = this.zonaReferencial[0]
+    }
     sectores.usuarios_fiscalizadores = fiscalizadorIndex
     sectores.usuarios_supervisores = supervisorIndex
     sectores.actividades = actividadesIndex
 
-    console.log(sectores)
-    this.data.sectores.push(sectores)
-
 
     sectoresText.nombre_sector = this.sectorIngresado
-    sectoresText.sector_data = this.zonaReferencial[1]
+    if(this.zonaReferencial != null){
+      sectoresText.sector_data = this.zonaReferencial[1]
+    }
     sectoresText.usuarios_fiscalizadores = fiscalizadorText
     sectoresText.usuarios_supervisores = supervisorText
     sectoresText.actividades = actividadText
 
-    console.log(sectoresText)
-    this.sectorTexto.push(sectoresText)
 
-
-    this.sectorIngresado = null
-    this.zonaReferencial = null
-    this.fiscalizadoresAsignados = null
-    this.supervisoresAignados = null
-    this.actividadesAsignadas = null
-
-    console.log(this.data)
-    this.botonDisabled = false;
+    if(this.sectorIngresado == null){
+      this.accionMostrarMensaje("Debes ingresar un nombre del sector",400)
+    }else if(this.zonaReferencial == null){
+      this.accionMostrarMensaje("Debes elegir una zona referencial",400)
+    }else if(fiscalizadorIndex.length == 0){
+      this.accionMostrarMensaje("Debes elegir al menos un fiscalizador para el sector",400)
+    }else if(supervisorIndex.length == 0){
+      this.accionMostrarMensaje("Debes elegir al menos un supervisor para el sector",400)
+    }else if(actividadesIndex.length == 0){
+      this.accionMostrarMensaje("Debes elegir al menos una actividad para el sector",400)
+    }else{
+      console.log(sectoresText)
+      console.log(sectores)
+      this.data.sectores.push(sectores)
+      this.sectorTexto.push(sectoresText)
+      console.log(this.data)
+      this.sectorIngresado = null
+      this.zonaReferencial = null
+      this.fiscalizadoresAsignados = []
+      this.supervisoresAignados = []
+      this.actividadesAsignadas = []
+      this.botonDisabled = false;
+      this.accionMostrarMensaje("Sector agregado con éxito",200)
+    }
   }
 
   filtroUsuariosEmpresa(){

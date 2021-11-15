@@ -57,10 +57,15 @@ export class CrearPersonalComponent implements OnInit {
 
   crearUsuario(){
 
+    this.usuarioData.correo = this.usuarioData.correo.toLowerCase();
+
     this.usuariosService.postUsuario(this.usuarioData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Usuario creado con éxito",200)
       console.log(data)
       this.usuarioCreado.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

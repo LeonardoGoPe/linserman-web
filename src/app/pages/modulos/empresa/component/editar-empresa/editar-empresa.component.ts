@@ -39,9 +39,12 @@ export class EditarEmpresaComponent implements OnInit {
   actualizarEmpresa(){
 
     this.generalService.putEmpresa(this.empresa,this.empresaData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Empresa actualizada con éxito",200)
       console.log(data)
       this.empresaElegida.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

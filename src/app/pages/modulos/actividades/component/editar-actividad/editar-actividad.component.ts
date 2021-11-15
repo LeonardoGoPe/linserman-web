@@ -39,9 +39,12 @@ export class EditarActividadComponent implements OnInit {
   actualizarActividad(){
 
     this.generalService.putActividad(this.actividad,this.actividadData)?.subscribe((data: any) =>{
+      this.accionMostrarMensaje("Actividad actualizada con éxito",200)
       console.log(data)
       this.actividadElegida.emit(true)
       this.closeModal();
+    }, error =>{
+      this.accionMostrarMensaje("Ha ocurrido un error",400)
     })
   }
 

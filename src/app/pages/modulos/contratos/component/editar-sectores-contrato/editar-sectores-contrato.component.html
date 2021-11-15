@@ -1,7 +1,16 @@
 <app-alerta [message]="mensaje" [codigo]="codigoRespuestaHttp" *ngIf="mostrarMensaje"></app-alerta>
 <div>
+
+   <div class="row col-12 d-flex justify-content-around my-4">
+      <div class="form-group row col-4 d-flex justify-content-centerbuttons search">
+         <button class="btn btn-info" (click)="mostrarSectores()">
+            Mostrar todos los sectores
+         </button>
+      </div>
+   </div>
+   
    <div *ngFor="let sector of arraySectores">
-      <div class="card mx-5 my-3">
+      <div class="card mx-5 my-3" *ngIf="sector.contratoXSectorActivoPendiente">
          <h5 class="card-header">Nombre del Sector:
             <input type="text" [(ngModel)]="sector.nombre_sector">
          </h5>

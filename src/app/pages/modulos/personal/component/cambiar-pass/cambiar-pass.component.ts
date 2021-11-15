@@ -36,7 +36,7 @@ export class CambiarPassComponent implements OnInit {
     this.usuariosService.postCambioPassUsuario(this.usuario.id,password)?.subscribe((resp: any) =>{
       this.accionMostrarMensaje("Contraseña Cambiada con Éxito",resp.code)
     },error=>{
-      this.accionMostrarMensaje("Ha Ocurrido un error",500)
+      this.accionMostrarMensaje("Ha Ocurrido un error",400)
     })
   }
 
